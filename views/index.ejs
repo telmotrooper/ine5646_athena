@@ -13,10 +13,16 @@
     <script src="/javascripts/script.js"></script>
   </head>
   <body>
-    <h1><%= title %></h1>
-    <button class="btn btn-primary" data-toggle="modal" data-target="#myModal"><%= new_bidding %></button>
+    <div class="header">
+      <div>
+        <h1><%= title %></h1>
+      </div>
+      <div>
+        <button class="btn btn-primary main-menu-btn" data-toggle="modal" data-target="#myModal"><%= new_bidding %></button>
+      </div>
+    </div>
 
-    <table>
+    <table id="table" class="table">
       <tr>
         <td><b>Número</b></td>
         <td><b>Nome</b></td>
