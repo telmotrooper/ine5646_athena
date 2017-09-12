@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+
+    <!-- 3rd party dependencies -->
+    <script src="/javascripts/jquery-3.2.1.min.js"></script>
+    <script src="/javascripts/bootstrap-3.3.7.min.js"></script>
+    <link rel='stylesheet' href='/stylesheets/bootstrap-3.3.7.min.css'/>
+
+    <!-- 1st party dependencies-->
+    <link rel='stylesheet' href='/stylesheets/style.css'/>
+    <script src="/javascripts/script.js"></script>
+  </head>
+  <body>
+    <h1><%= title %></h1>
+    <p>Welcome to <%= title %></p>
+
+    <button class="btn btn-primary" data-toggle="modal" data-target="#myModal"><%= new_bidding %></button>
+
+    <!-- Modal -->
+    <div id="myModal" class="modal fade" role="dialog" data-keyboard="false" data-backdrop="static">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title"><%= new_bidding %></h4>
+          </div>
+          <div class="modal-body">
+            <p><label><%= name %></label>
+            <input type="text" placeholder="<%= name_placeholder %>"></p>
+            <p><label><%= applicant %></label>
+            <input type="text" placeholder="<%= applicant_placeholder %>"></p>
+            <p><label><%= start_date %></label>
+            <input type="text" placeholder="<%= start_date_placeholder %>"></p>
+            <p><label><%= end_date %></label>
+            <input type="text" placeholder="<%= end_date_placeholder %>"></p>
+            <p><label><%= products %></label>
+            <input type="text" placeholder=""></p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-success" data-dismiss="modal"><%= confirm %></button>
+            <button type="button" class="btn btn-danger" data-dismiss="modal"><%= cancel %></button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

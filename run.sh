@@ -1,0 +1,1 @@
+authbind node app.js
