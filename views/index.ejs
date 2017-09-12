@@ -14,9 +14,28 @@
   </head>
   <body>
     <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
-
     <button class="btn btn-primary" data-toggle="modal" data-target="#myModal"><%= new_bidding %></button>
+
+    <table>
+      <tr>
+        <td><b>Número</b></td>
+        <td><b>Nome</b></td>
+        <td><b>Requerente</b></td>
+        <td><b>Início</b></td>
+        <td><b>Fim</b></td>
+        <td><b>Produtos</b></td>
+        <td><b>Valor do menor lance</b></td>
+        <td><b>Fornecedor</b></td>
+      </tr>
+        <td>1</td>
+        <td>Material para restauração da ponte</td>
+        <td>Prefeitura de Florianópolis</td>
+        <td>12/09/2017</td>
+        <td>10/01/2018</td>
+        <td>Produtos</td>
+        <td>R$ 550.000,00</td>
+        <td>Odebretch</td>
+    </table>
 
     <!-- Modal -->
     <div id="myModal" class="modal fade" role="dialog" data-keyboard="false" data-backdrop="static">
@@ -38,8 +57,8 @@
             <input type="text" placeholder=""></p>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-success" data-dismiss="modal"><%= confirm %></button>
             <button type="button" class="btn btn-danger" data-dismiss="modal"><%= cancel %></button>
+            <button type="button" class="btn btn-success" data-dismiss="modal"><%= confirm %></button>
           </div>
         </div>
       </div>
