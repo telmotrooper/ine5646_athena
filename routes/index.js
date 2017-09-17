@@ -1,14 +1,14 @@
 var express = require('express');
 var router = express.Router();
 
-var sqlite3 = require('sqlite3').verbose();
-var db = new sqlite3.Database('athena.db', (err) => {
-  if(err) {
-    return console.error(err.message);
-  } else {
-    console.log("Connected to the SQLite database.");
-  }
-});
+// var sqlite3 = require('sqlite3').verbose();
+// var db = new sqlite3.Database('athena.db', (err) => {
+//   if(err) {
+//     return console.error(err.message);
+//   } else {
+//     console.log("Connected to the SQLite database.");
+//   }
+// });
 
 // db.serialize(function() {
 //   db.run("CREATE TABLE lorem (info TEXT)");
