@@ -39,24 +39,20 @@ router.get('/', function(req, res, next) {
             myJSON[i].products = [];
           }
 
-          /* Iterate through all products in biddings */
+          /* Iterate through all products registed in biddings */
           for(var j = 0; j < rows.length; j++) {
 
             /* For each product, iterate through all biddings again */
             for(var k = 0; k < myJSON.length; k++) {
               if(myJSON[k].id == rows[j].bidding) {
+                delete rows[j].bidding; // Remove 'bidding' property so it won't show up in the final response
                 myJSON[k].products.push(rows[j]);
                 break;
               }
             }
           }
 
-          console.log("--- Biddings ---");
-          console.log(myJSON);
-
-          console.log("--- Products ---");
-          console.log(rows);
-
+          /* Return JSON to whoever asked */
           res.type("application/json");
           res.send(myJSON);
         }
