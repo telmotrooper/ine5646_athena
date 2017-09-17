@@ -10,7 +10,8 @@ router.get('/new', function(req, res, next) {
      req.query.value != null) {
       res.send(req.query);
      } else {
-       res.send("<p>Invalid syntax.</p>Required bidding, date, supplier and value.");
+       res.write("<h1>Invalid syntax.</h1>")
+       res.end("<p>The following fiels are required: bidding, date, supplier and value.</p>");
      }
 });
 
