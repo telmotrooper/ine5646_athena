@@ -10,7 +10,7 @@ router.get('/', function(req, res, next) {
     } else {
       db.all("SELECT * from Biddings", function(error, rows) {
         res.render('index', {
-          biddings: rows,
+          biddings: rows, // biddings from the database
           title: 'Gerenciar licitações',
           new_bidding: 'Nova licitação',
           name: 'Nome',
@@ -27,8 +27,6 @@ router.get('/', function(req, res, next) {
           start_date_placeholder: 'Formato: dd/mm/aaaa',
           end_date_placeholder: 'Formato: dd/mm/aaaa'
         });
-
-        console.log(rows);
       });
     }
   });
