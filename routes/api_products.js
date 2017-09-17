@@ -1,9 +1,8 @@
 var express = require('express');
 var sqlite3 = require('sqlite3').verbose();
-// var asyncJSON = require('async-json');
 var router = express.Router();
 
-/* GET list of biddings */
+/* Get products from the API */
 router.get('/', function(req, res, next) {
   myJSON = [];
 
@@ -11,7 +10,7 @@ router.get('/', function(req, res, next) {
     if(err) {
       return console.error(err.message);
     } else {
-      db.all("SELECT * from Biddings", function(error, rows) {
+      db.all("SELECT bidding, name AS product_name, product AS product_id, quantity FROM Biddings_Products JOIN Products ON product = id", function(error, rows) {
         for(var i = 0; i < rows.length; i++) {
           myJSON.push(rows[i]);
         };
