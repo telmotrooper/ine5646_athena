@@ -4,7 +4,14 @@ var router = express.Router();
 
 /* Add data to the API */
 router.get('/new', function(req, res, next) {
-  res.send(req.query);
+  if(req.query.bidding != null &&
+     req.query.date != null &&
+     req.query.supplier != null &&
+     req.query.value != null) {
+      res.send(req.query);
+     } else {
+       res.send("<p>Invalid syntax.</p>Required bidding, date, supplier and value.");
+     }
 });
 
 /* Get data from the API */
