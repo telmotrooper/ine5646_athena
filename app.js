@@ -12,6 +12,7 @@ var parseJSON = require('json-parse-async');
 /* Pages */
 var index = require('./routes/index');
 var api = require('./routes/api');
+var api_bids = require('./routes/api_bids');
 
 /* Initialize application */
 var app = express();
@@ -34,8 +35,10 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+/* Paths */
 app.use('/', index);
 app.use('/api', api);
+app.use('/api/bids', api_bids);
 
 app.post('/refresh_products', function(req, res) {
   /* Get products from API */
