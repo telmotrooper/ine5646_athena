@@ -2,6 +2,12 @@ var express = require('express');
 var sqlite3 = require('sqlite3').verbose();
 var router = express.Router();
 
+/* Add data to the API */
+router.get('/new', function(req, res, next) {
+  res.send(req.query);
+});
+
+/* Get data from the API */
 router.get('/', function(req, res, next) {
   myJSON = [];
 
