@@ -1,12 +1,10 @@
 var express = require('express');
 var sqlite3 = require('sqlite3').verbose();
-// var asyncJSON = require('async-json');
 var router = express.Router();
+var myJSON = [];  // Used to pass the rows between functions
 
 /* GET list of biddings */
 router.get('/', function(req, res, next) {
-  myJSON = [];
-
   var db = new sqlite3.Database('athena.db', (err) => {
     if(err) {
       return console.error(err.message);
@@ -17,13 +15,20 @@ router.get('/', function(req, res, next) {
         } else {
           /* At this point you already have all the biddings in the 'rows' array */
 
-          res.type("application/json");
-          res.send(rows);
+          myJSON = rows;
+
+          next(); // Run next router.get('/') function;
         }
       });
     };
   });
   db.close();
+});
+
+router.get('/', function(req, res, next) {
+  // res.send("Hey, I'm working!");
+  res.type("application/json");
+  res.send(myJSON);
 });
 
 module.exports = router;
