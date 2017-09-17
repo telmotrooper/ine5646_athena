@@ -1,5 +1,5 @@
 $(document).ready(function() {
-	console.log("jQuery is working!");
-
-	// $('#table').DataTable();
+	$("#refresh-products").click(function() {
+		$.post("/refresh_products");
+	});
 });

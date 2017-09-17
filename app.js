@@ -34,6 +34,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', index);
 app.use('/api', api);
 
+app.post('/refresh_products', function(req, res) {
+  console.log("I've been clicked!");
+});
+
 /* Catch 404 and forward to error handler */
 app.use(function(req, res, next) {
   var err = new Error('Not Found');
