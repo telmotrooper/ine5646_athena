@@ -1,13 +1,15 @@
 var express = require('express');
 var sqlite3 = require('sqlite3').verbose();
 var router = express.Router();
+
+var db_file = "athena.db";
 var myJSON = [];  // Used to pass the rows between functions
 
 /* GET list of biddings */
 router.get('/', function(req, res, next) {
-  var db = new sqlite3.Database('athena.db', (err) => {
-    if(err) {
-      return console.error(err.message);
+  var db = new sqlite3.Database(db_file, (error) => {
+    if(error) {
+      return console.error(error.message);
     } else {
       db.all("SELECT * from Biddings", function(error, rows) {
         if(error) {
@@ -26,7 +28,7 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/', function(req, res, next) {
-  // res.send("Hey, I'm working!");
+  
   res.type("application/json");
   res.send(myJSON);
 });
