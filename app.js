@@ -7,6 +7,7 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var request = require('request');
 var sqlite3 = require('sqlite3').verbose();
+var parseJSON = require('json-parse-async');
 
 /* Pages */
 var index = require('./routes/index');
@@ -41,24 +42,34 @@ app.post('/refresh_products', function(req, res) {
   request("https://ine5646products.herokuapp.com/api/products", function(error, response, body) {
     if(error) {
       console.log("Error: ", error);
-    } else {
+    } else { // If we we're able to load it
       console.log('Status code:', response && response.statusCode);
-      console.log('Body:', body);
 
-      /* Connect to the database */
-      var db = new sqlite3.Database('athena.db', (err) => {
-        if(err) {
-          return console.error(err.message);
-        } else {
-          console.log("Connected to the SQLite database.");
+      parseJSON(body, function(error, json) {
+        if(error) {
+          console.log("Error: ", error);
+        } else { // JSON successfully read
+          console.log(json);
 
-          /* Clean table */
-          db.run("DELETE FROM Products");
+          /* Connect to the database */
+          var db = new sqlite3.Database('athena.db', (err) => {
+            if(err) {
+              return console.error(err.message);
+            } else {
+              /* Clean table */
+              db.run("DELETE FROM Products");
+
+              /* Register all products */
+              for(i = 0; i < json.length; i++) {
+                db.run("INSERT INTO Products VALUES (?, ?, ?)", json[i].id, json[i].name, json[i].enabled);
+              }
+            }
+          });
+          db.close();
+
           
-          // db.run("INSERT INTO Products VALUES (?, ?, ?)", "123", "Bolinha", "1");
         }
       });
-      db.close();
     }
   });
 });
