@@ -12,10 +12,14 @@ router.get('/', function(req, res, next) {
       return console.error(err.message);
     } else {
       db.all("SELECT * from Biddings", function(error, rows) {
-        /* At this point you already have all the biddings in the 'rows' array */
+        if(error) {
+          res.send("Error running query.");
+        } else {
+          /* At this point you already have all the biddings in the 'rows' array */
 
-        res.type("application/json");
-        res.send(rows);
+          res.type("application/json");
+          res.send(rows);
+        }
       });
     };
   });
