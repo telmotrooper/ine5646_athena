@@ -6,6 +6,7 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var request = require('request');
+var sqlite3 = require('sqlite3').verbose();
 
 /* Pages */
 var index = require('./routes/index');
@@ -40,22 +41,26 @@ app.post('/refresh_products', function(req, res) {
   request("https://ine5646products.herokuapp.com/api/products", function(error, response, body) {
     if(error) {
       console.log("Error: ", error);
-    } else {  
+    } else {
       console.log('Status code:', response && response.statusCode);
       console.log('Body:', body);
-    }
-  });
 
-  /* Connect to the database */
-  var sqlite3 = require('sqlite3').verbose();
-  var db = new sqlite3.Database('athena.db', (err) => {
-    if(err) {
-      return console.error(err.message);
-    } else {
-      console.log("Connected to the SQLite database.");
+      /* Connect to the database */
+      var db = new sqlite3.Database('athena.db', (err) => {
+        if(err) {
+          return console.error(err.message);
+        } else {
+          console.log("Connected to the SQLite database.");
+
+          /* Clean table */
+          db.run("DELETE FROM Products");
+          
+          // db.run("INSERT INTO Products VALUES (?, ?, ?)", "123", "Bolinha", "1");
+        }
+      });
+      db.close();
     }
   });
-  db.close();
 });
 
 /* Catch 404 and forward to error handler */
