@@ -37,16 +37,21 @@
         <td><b>Fornecedor</b></td>
         <td><b>Ações</b></td>
       </tr>
-        <td>1</td>
-        <td>Material para restauração da ponte</td>
-        <td>Prefeitura de Florianópolis</td>
-        <td>Habilitada</td>
-        <td>12/09/2017</td>
-        <td>10/01/2018</td>
+
+      <% for(var i = 0; i < biddings.length; i++) { %>
+      <tr>
+        <td><%= biddings[i].id %></td>
+        <td><%= biddings[i].name %></td>
+        <td><%= biddings[i].applicant %></td>
+        <td><%= biddings[i].status %></td>
+        <td><%= biddings[i].start_date %></td>
+        <td><%= biddings[i].end_date %></td>
         <td>Produtos</td>
         <td>R$ 550.000,00</td>
         <td>Odebretch</td>
         <td><i class="fa fa-edit"></i><i class="fa fa-close"></i></td>
+      </tr>
+      <% } %>
     </table>
 
     <!-- Modal -->
