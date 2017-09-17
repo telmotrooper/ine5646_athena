@@ -5,7 +5,7 @@ var router = express.Router();
 var db_file = "athena.db";
 var myJSON = [];  // Used to pass the rows between functions
 
-/* GET list of biddings */
+/* GET biddings */
 router.get('/', function(req, res, next) {
   var db = new sqlite3.Database(db_file, (error) => {
     if(error) {
@@ -25,6 +25,7 @@ router.get('/', function(req, res, next) {
   db.close();
 });
 
+/* GET products from each bidding */
 router.get('/', function(req, res, next) {
   var db = new sqlite3.Database(db_file, (error) => {
     if(error) {
@@ -34,8 +35,9 @@ router.get('/', function(req, res, next) {
         if(error) {
           res.send("Error running query.");
         } else {
-          /* Give each bidding it's own products array */
+          /* Give each bidding it's own bids and products arrays */
           for(var i = 0; i < myJSON.length; i++) {
+            myJSON[i].bids = [];
             myJSON[i].products = [];
           }
 
@@ -51,7 +53,36 @@ router.get('/', function(req, res, next) {
               }
             }
           }
+          next(); // Run next router.get('/') function;
+        }
+      });
+    }
+  });
+  db.close();
+});
 
+/* GET bids from each bidding */
+router.get('/', function(req, res, next) {
+  var db = new sqlite3.Database(db_file, (error) => {
+    if(error) {
+      return console.error(error.message);
+    } else {
+      db.all("SELECT * FROM Bids", function(error, rows) {
+        if(error) {
+          res.send("Error running query.");
+          console.log("----- Error running query. -----");
+        } else {
+          /* Iterate through all bids registed */
+          for(var i = 0; i < rows.length; i++) {
+            /* For each bid, iterate through all biddings again */
+            for(var j = 0; j < myJSON.length; j++) {
+              if(myJSON[j].id == rows[i].bidding) {
+                delete rows[j].bidding; // Remove 'bidding' property so it won't show up in the final response
+                myJSON[j].bids.push(rows[i]);
+                break;
+              }
+            }
+          }
           /* Return JSON to whoever asked */
           res.type("application/json");
           res.send(myJSON);
