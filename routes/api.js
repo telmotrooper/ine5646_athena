@@ -12,12 +12,10 @@ router.get('/', function(req, res, next) {
       return console.error(err.message);
     } else {
       db.all("SELECT * from Biddings", function(error, rows) {
-        for(var i = 0; i < rows.length; i++) {
-          myJSON.push(rows[i]);
-        };
+        /* At this point you already have all the biddings in the 'rows' array */
 
         res.type("application/json");
-        res.send(myJSON);
+        res.send(rows);
       });
     };
   });
