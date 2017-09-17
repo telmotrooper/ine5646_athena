@@ -59,6 +59,7 @@ router.get('/', function(req, res, next) {
       });
     }
   });
+  db.close();
 });
 
 module.exports = router;
