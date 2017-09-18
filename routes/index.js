@@ -6,7 +6,7 @@ var ip;
 
 router.get('/', function(req, res, next) {
   /* Get own IP */
-  require('dns').lookup(require('os').hostname(), function (err, address, fam) {
+  require('dns').lookup(require('os').hostname(), function (error, address) {
     /* Request from own API */
     ownAPI = "http://" + address + ":" + req.app.get('port') + "/api";
 
