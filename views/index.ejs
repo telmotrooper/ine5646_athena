@@ -46,8 +46,11 @@
         <td><%= biddings[i].status %></td>
         <td><%= biddings[i].start_date %></td>
         <td><%= biddings[i].end_date %></td>
-        <td>Produtos</td>
-        <td>R$ 550.000,00</td>
+        <td><% for(var j = 0; j < biddings[i].products.length; j++) { %>
+          <p><%= biddings[i].products[j].quantity %>
+          <%= biddings[i].products[j].product_name %></p>
+        <% } %></td>
+        <td>R$ <%= biddings[i].lowestBid.value %></td>
         <td><%= biddings[i].lowestBid.supplier %></td>
         <td><i class="fa fa-edit"></i><i class="fa fa-close"></i></td>
       </tr>
