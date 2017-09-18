@@ -70,7 +70,6 @@ router.get('/', function(req, res, next) {
       db.all("SELECT * FROM Bids", function(error, rows) {
         if(error) {
           res.send("Error running query.");
-          console.log("----- Error running query. -----");
         } else {
           /* Iterate through all bids registed */
           for(var i = 0; i < rows.length; i++) {
@@ -83,6 +82,36 @@ router.get('/', function(req, res, next) {
               }
             }
           }
+          next();
+        }
+      });
+    }
+  });
+  db.close();
+});
+
+/* GET lowest bids from each bidding */
+router.get('/', function(req, res, next) {
+  var db = new sqlite3.Database(db_file, (error) => {
+    if(error) {
+      return console.error(error.message);
+    } else {
+      db.all("SELECT bidding, date, supplier, MIN(value) FROM Bids GROUP BY bidding", function(error, rows) {
+        if(error) {
+          res.send("Error running query.");
+        } else {
+          /* Iterate through all of the lowest bids */
+          for(var i = 0; i < rows.length; i++) {
+            /* For each lowest bid, iterate through all biddings again */
+            for(var j = 0; j < myJSON.length; j++) {
+              if(myJSON[j].id == rows[i].bidding) {
+                delete rows[j].bidding; // Remove 'bidding' property so it won't show up in the final response
+                myJSON[j].lowestBid = rows[i];
+                break;
+              }
+            }
+          }
+
           /* Return JSON to whoever asked */
           res.type("application/json");
           res.send(myJSON);
