@@ -1,16 +1,16 @@
 var express = require('express');
-var sqlite3 = require('sqlite3').verbose();
+var request = require('request');
+var parseJSON = require('json-parse-async');
 var router = express.Router();
 
 router.get('/', function(req, res, next) {
-  /* Connect to the database */
-  var db = new sqlite3.Database('athena.db', (err) => {
-    if(err) {
-      return console.error(err.message);
+  request("https://athena-ine5646.herokuapp.com/api", function(error, response, body) {
+    if(error) {
+      console.log("Error: ", error);
     } else {
-      db.all("SELECT * from Biddings", function(error, rows) {
+      parseJSON(body, function(error, content) {  // Get JSON object from API
         res.render('index', {
-          biddings: rows, // biddings from the database
+          biddings: content, // biddings from the database
           title: 'Gerenciar licitações',
           new_bidding: 'Nova licitação',
           name: 'Nome',
@@ -18,10 +18,10 @@ router.get('/', function(req, res, next) {
           start_date: 'Data de início',
           end_date: 'Data de fim',
           products: 'Produtos',
-      
+        
           confirm: 'Confirmar',
           cancel: 'Cancelar',
-      
+        
           name_placeholder: 'Exemplo: Material para restauração da ponte',
           applicant_placeholder: 'Exemplo: Prefeitura de Florianópolis',
           start_date_placeholder: 'Formato: dd/mm/aaaa',
@@ -30,7 +30,6 @@ router.get('/', function(req, res, next) {
       });
     }
   });
-  db.close();
 });
 
 module.exports = router;

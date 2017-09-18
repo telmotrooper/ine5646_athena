@@ -48,7 +48,7 @@
         <td><%= biddings[i].end_date %></td>
         <td>Produtos</td>
         <td>R$ 550.000,00</td>
-        <td>Odebretch</td>
+        <td><%= biddings[i].lowestBid.supplier %></td>
         <td><i class="fa fa-edit"></i><i class="fa fa-close"></i></td>
       </tr>
       <% } %>
