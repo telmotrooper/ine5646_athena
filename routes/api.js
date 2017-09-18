@@ -96,7 +96,7 @@ router.get('/', function(req, res, next) {
     if(error) {
       return console.error(error.message);
     } else {
-      db.all("SELECT bidding, date, supplier, MIN(value) FROM Bids GROUP BY bidding", function(error, rows) {
+      db.all("SELECT bidding, date, supplier, MIN(value) as value FROM Bids GROUP BY bidding", function(error, rows) {
         if(error) {
           res.send("Error running query.");
         } else {
