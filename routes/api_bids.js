@@ -2,17 +2,31 @@ var express = require('express');
 var sqlite3 = require('sqlite3').verbose();
 var router = express.Router();
 
-/* Add data to the API */
-router.get('/new', function(req, res, next) {
-  if(req.query.bidding != null &&
-     req.query.date != null &&
-     req.query.supplier != null &&
-     req.query.value != null) {
-      res.send(req.query);
-     } else {
-       res.write("<h1>Invalid syntax.</h1>")
-       res.end("<p>The following fiels are required: bidding, date, supplier and value.</p>");
-     }
+var db_file = "athena.db";
+
+router.post('/', function(req, res, next) {
+  /* If all required fields have been filled */
+  if(Number.isInteger(req.body.bidding) && req.body.date != null &&
+     req.body.supplier != null && !isNaN(parseFloat(req.body.value))
+     && isFinite(req.body.value)) {
+      console.log(req.body);
+
+      var db = new sqlite3.Database(db_file, (error) => {
+        if(error) {
+          return console.error(error.message);
+        } else {
+          db.run("INSERT INTO Bids VALUES (?, ?, ?, ?)",
+          req.body.bidding, req.body.date, req.body.supplier, req.body.value);
+        }
+      });
+      db.close();
+
+      res.status("202"); // 202 = Accepted
+      res.end("Bid accepted.");
+  } else {
+    res.status("400");
+    res.end("Invalid syntax.");
+  }
 });
 
 /* Get data from the API */

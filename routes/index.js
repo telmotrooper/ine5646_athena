@@ -11,6 +11,7 @@ router.get('/', function(req, res, next) {
     ownAPI = "http://" + address + ":" + req.app.get('port') + "/api";
 
     request(ownAPI, function(error, response, body) {
+      
       if(error) {
         console.log("Error: ", error);
       } else {
