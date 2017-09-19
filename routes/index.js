@@ -37,6 +37,7 @@ router.get('/', function(req, res, next) {
                 
                   confirm: 'Confirmar',
                   cancel: 'Cancelar',
+                  select: 'Selecionar',
                 
                   name_placeholder: 'Exemplo: Material para restauração da ponte',
                   applicant_placeholder: 'Exemplo: Prefeitura de Florianópolis',
