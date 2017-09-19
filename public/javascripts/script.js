@@ -1,5 +1,5 @@
 function change_name(name) {
-	console.log("I'm working, " + name + "!");
+	$("#product-1").text(name);
 }
 
 $(document).ready(function() {
