@@ -6,6 +6,9 @@ input {
   text-align: center;
   width: 100%;
 }
+.quantity {
+  width: 60px;
+}
 a {
   color: #00B7FF;
 }
