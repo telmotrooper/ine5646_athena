@@ -73,13 +73,13 @@
             <input type="text" placeholder="<%= start_date_placeholder %>"></p>
             <p><label><%= end_date %></label>
             <input type="text" placeholder="<%= end_date_placeholder %>"></p>
-            <p><label><%= products %></label>
+            <p><label><%= products_label %></label>
             <div class="dropdown">
               <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown"><%= select %>
               <span class="caret"></span></button>
               <ul class="dropdown-menu">
                 <% for(var p = 0; p < products.length; p++) { %>
-                <li><a href="#"><%= products[p].product_name %></a></li>
+                <li><a href="#"><%= products[p].name %></a></li>
                 <% } %>
               </ul>
             </div>

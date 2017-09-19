@@ -15,6 +15,7 @@ var api = require('./routes/api');
 var api_bids = require('./routes/api_bids');
 var api_products = require('./routes/api_products');
 var api_products_in_biddings = require('./routes/api_products_in_biddings');
+var api_enabled_products = require('./routes/api_enabled_products');
 
 /* Initialize application */
 var app = express();
@@ -43,6 +44,7 @@ app.use('/api', api);
 app.use('/api/bids', api_bids);
 app.use('/api/products', api_products);
 app.use('/api/products_in_biddings', api_products_in_biddings);
+app.use('/api/enabled_products', api_enabled_products);
 
 app.post('/refresh_products', function(req, res) {
   /* Get products from API */
@@ -50,13 +52,11 @@ app.post('/refresh_products', function(req, res) {
     if(error) {
       console.log("Error: ", error);
     } else { // If we we're able to load it
-      console.log('Status code:', response && response.statusCode);
-
+    
       parseJSON(body, function(error, json) {
         if(error) {
           console.log("Error: ", error);
         } else { // JSON successfully read
-          console.log(json);
 
           /* Connect to the database */
           var db = new sqlite3.Database('athena.db', (err) => {
@@ -64,17 +64,26 @@ app.post('/refresh_products', function(req, res) {
               return console.error(err.message);
             } else {
               /* Clean table */
-              db.run("DELETE FROM Products");
+              db.run("DELETE FROM Products", function(error) {
+                if(error) {
+                  console.log(error.message);
+                }
+              });
 
               /* Register all products */
               for(i = 0; i < json.length; i++) {
-                db.run("INSERT INTO Products VALUES (?, ?, ?)", json[i].id, json[i].name, json[i].enabled);
+                db.run("INSERT INTO Products VALUES (?, ?, ?)", json[i].id, json[i].name, json[i].enabled, function(error) {
+                  if(error) {
+                    console.log(error.message);
+                  }
+                });
               }
             }
           });
           db.close();
 
-          
+          res.status('202');
+          res.end("Accepted.");
         }
       });
     }

@@ -16,24 +16,22 @@ router.get('/', function(req, res, next) {
         console.log("Error: ", error);
       } else {
         parseJSON(body, function(error, biddingsJSON) {  // Get JSON object from API
-          /* Request products form own API */
-          request(ownAPI + "/products", function(error, response, body) {
+          /* Request enabled products form own API */
+          request(ownAPI + "/enabled_products", function(error, response, body) {
             if(error) {
               console.log("Error: ", error);
             } else {
               parseJSON(body, function(error, productsJSON) {
-                console.log(productsJSON);
-
                 res.render('index', {
                   biddings: biddingsJSON,  // biddings from the database
-                  products: productsJSON,  // products from the database
+                  products: productsJSON,  // enabled products from the database
                   title: 'Gerenciar licitações',
                   new_bidding: 'Nova licitação',
                   name: 'Nome',
                   applicant: 'Requerente',
                   start_date: 'Data de início',
                   end_date: 'Data de fim',
-                  products: 'Produtos',
+                  products_label: 'Produtos',
                 
                   confirm: 'Confirmar',
                   cancel: 'Cancelar',
