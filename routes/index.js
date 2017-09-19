@@ -15,9 +15,9 @@ router.get('/', function(req, res, next) {
       if(error) {
         console.log("Error: ", error);
       } else {
-        parseJSON(body, function(error, content) {  // Get JSON object from API
+        parseJSON(body, function(error, biddingsJSON) {  // Get JSON object from API
           res.render('index', {
-            biddings: content, // biddings from the database
+            biddings: biddingsJSON, // biddings from the database
             title: 'Gerenciar licitações',
             new_bidding: 'Nova licitação',
             name: 'Nome',
