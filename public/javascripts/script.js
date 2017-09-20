@@ -27,9 +27,6 @@ function new_product() {
 $(document).ready(function() {
 	baseProduct = $(".dropdown").clone();
 
-	new_product();
-	new_product();
-
 	$("#refresh-products").click(function() {
 		$.post("/refresh_products", function() {
 			/* Reload page after refreshing products */
