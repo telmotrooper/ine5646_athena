@@ -4,9 +4,12 @@ var productCounter = 1;
 function change_name(product, name) {
 	product = $(product);  // Wrapping DOM element in a jQuery element
 
-	console.log(product.closest("div").children("button").prop("id"));
+	/* Finding which product it is from the anchor that called the function */
+	productID = product.closest("div").children("button").prop("id");
 
-	// $(product.id).text(name);
+	console.log("Changing button " + productID + " to " + name);
+
+	$("#" + productID).text(name);
 }
 
 function new_product() {
