@@ -12,6 +12,7 @@
     <!-- 1st party dependencies-->
     <link rel='stylesheet' href='/stylesheets/style.css'/>
     <script src="/javascripts/script.js"></script>
+
   </head>
   <body>
     <div class="header">
@@ -74,16 +75,18 @@
             <p><label><%= end_date %></label>
             <input type="text" placeholder="<%= end_date_placeholder %>"></p>
             <p><label><%= products_label %></label>
-            <div class="dropdown">
-              <input class="quantity" type="text" placeholder="Qntd">
-              <button id="product-1" class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown"><%= select %>
-              <span class="caret"></span></button>
-              <ul class="dropdown-menu">
-                <% for(var p = 0; p < products.length; p++) { %>
-                <li><a onclick="change_name('<%= products[p].name %>')"><%= products[p].name %></a></li>
-                <% } %>
-              </ul>
-              <a href="#"><i class="fa fa-plus-square"></i></a>
+            <div id="products">
+              <div class="dropdown" id="dropdown-1">
+                <input class="quantity" type="text" placeholder="Qntd">
+                <button id="product-1" class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown"><%= select %>
+                <span class="caret"></span></button>
+                <ul class="dropdown-menu">
+                  <% for(var p = 0; p < products.length; p++) { %>
+                  <li><a onclick="change_name(this, '<%= products[p].name %>')"><%= products[p].name %></a></li>
+                  <% } %>
+                </ul>
+                <a href="#"><i class="fa fa-plus-square"></i></a>
+              </div>
             </div>
           </div>
           <div class="modal-footer">
