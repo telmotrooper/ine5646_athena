@@ -14,6 +14,7 @@ const api_enabled_products = require("./routes/api_enabled_products");
 const api_products = require("./routes/api_products");
 const api_products_in_biddings = require("./routes/api_products_in_biddings");
 const refresh_products = require("./routes/refresh_products");
+const test = require("./routes/test");
 const time = require("./routes/time");
 
 /* Initialize application */
@@ -44,6 +45,7 @@ app.use("/api/bids", api_bids);
 app.use("/api/products", api_products);
 app.use("/api/products_in_biddings", api_products_in_biddings);
 app.use("/api/enabled_products", api_enabled_products);
+app.use("/test", test);
 app.use("/time", time);
 app.use("/refresh_products", refresh_products);
 

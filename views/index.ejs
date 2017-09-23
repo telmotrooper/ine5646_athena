@@ -66,13 +66,13 @@
 					</div>
 					<div class="modal-body">
 						<p><label><%= name %></label>
-						<input type="text" placeholder="<%= name_placeholder %>" autocomplete="off"></p>
+						<input id="name" type="text" placeholder="<%= name_placeholder %>" autocomplete="off"></p>
 						<p><label><%= applicant %></label>
-						<input type="text" placeholder="<%= applicant_placeholder %>" autocomplete="off"></p>
+						<input id="applicant" type="text" placeholder="<%= applicant_placeholder %>" autocomplete="off"></p>
 						<p><label><%= start_date %></label>
-						<input type="text" placeholder="<%= start_date_placeholder %>" autocomplete="off"></p>
+						<input id="start_date" type="text" placeholder="<%= start_date_placeholder %>" autocomplete="off"></p>
 						<p><label><%= end_date %></label>
-						<input type="text" placeholder="<%= end_date_placeholder %>" autocomplete="off"></p>
+						<input id="end_date" type="text" placeholder="<%= end_date_placeholder %>" autocomplete="off"></p>
 						<p><label><%= products_label %></label>
 						<div id="products">
 							<div class="dropdown" id="dropdown-1">
@@ -90,7 +90,7 @@
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-danger" data-dismiss="modal"><%= cancel %></button>
-						<button type="button" class="btn btn-success" data-dismiss="modal"><%= confirm %></button>
+						<button id="confirm" type="button" class="btn btn-success" data-dismiss="modal"><%= confirm %></button>
 					</div>
 				</div>
 			</div>

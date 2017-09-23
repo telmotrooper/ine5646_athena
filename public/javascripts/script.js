@@ -8,21 +8,19 @@ function change_name(product, name) {
 	/* Finding which product it is from the anchor that called the function */
 	productID = product.closest("div").children("button").prop("id");
 
-	console.log("Changing button " + productID + " to " + name);
-
 	$("#" + productID).text(name);
 }
 
 function calc_date_and_time(ms) {
 	var date = new Date(ms);
 
-  /* Getting UTC values */
-  var hour = date.getUTCHours();
-  var min  = date.getUTCMinutes();
-  var sec  = date.getUTCSeconds();
-  var day  = date.getUTCDate();
-  var month = date.getUTCMonth() + 1;
-  var year = date.getUTCFullYear();
+	/* Getting UTC values */
+	var hour = date.getUTCHours();
+	var min  = date.getUTCMinutes();
+	var sec  = date.getUTCSeconds();
+	var day  = date.getUTCDate();
+	var month = date.getUTCMonth() + 1;
+	var year = date.getUTCFullYear();
 	
 	/* Putting the zeroes when required */
 	hour = (hour < 10 ? "0" : "") + hour;
@@ -35,8 +33,6 @@ function calc_date_and_time(ms) {
 }
 
 function new_product() {
-	// console.log(baseProduct.children("button").prop("id"));
-
 	productCounter++;
 
 	newProduct = baseProduct.clone();
@@ -65,5 +61,20 @@ $(document).ready(function() {
 
 			$("#time-and-date").html(calc_date_and_time(date));
 		}, 1000);
+	});
+
+	$("#confirm").click(function() {
+		console.log("name: " + $("#name").val());
+		console.log("applicant: " + $("#applicant").val());
+		console.log("start_date: " + $("#start_date").val());
+		console.log("end_date: " + $("#end_date").val());
+
+		$("#products").children(".dropdown").each(function(key, value) {
+			let product_name = $(value).children(".btn").text();
+			let quantity = $(value).children("input").val();
+
+			console.log("Prod: " + product_name);
+			console.log("Qntd: " + quantity);
+		});
 	});
 });
