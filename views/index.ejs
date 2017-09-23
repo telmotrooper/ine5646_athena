@@ -1,101 +1,99 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title><%= title %></title>
+	<head>
+		<title><%= title %></title>
 
-    <!-- 3rd party dependencies -->
-    <script src="/javascripts/jquery-3.2.1.min.js"></script>
-    <script src="/javascripts/bootstrap-3.3.7.min.js"></script>
-    <link rel='stylesheet' href='/stylesheets/bootstrap-3.3.7.min.css'/>
-    <link rel='stylesheet' href='/stylesheets/font-awesome-4.7.0.min.css'/>
+		<!-- 3rd party dependencies -->
+		<script src="/javascripts/jquery-3.2.1.min.js"></script>
+		<script src="/javascripts/bootstrap-3.3.7.min.js"></script>
+		<link rel='stylesheet' href='/stylesheets/bootstrap-3.3.7.min.css'/>
+		<link rel='stylesheet' href='/stylesheets/font-awesome-4.7.0.min.css'/>
 
-    <!-- 1st party dependencies-->
-    <link rel='stylesheet' href='/stylesheets/style.css'/>
-    <script src="/javascripts/script.js"></script>
+		<!-- 1st party dependencies-->
+		<link rel='stylesheet' href='/stylesheets/style.css'/>
+		<script src="/javascripts/script.js"></script>
+	</head>
+	<body>
+		<div class="header">
+			<div>
+				<h1><%= title %></h1>
+			</div>
+			<div>
+				<span id="time-and-date"></span>
+				<button id="refresh-products" class="btn btn-default">Atualizar produtos</button>
+				<button class="btn btn-primary main-menu-btn" data-toggle="modal" data-target="#myModal"><%= new_bidding %></button>
+			</div>
+		</div>
 
-  </head>
-  <body>
-    <div class="header">
-      <div>
-        <h1><%= title %></h1>
-      </div>
-      <div>
-        <span id="time-and-date"></span>
-        <button id="refresh-products" class="btn btn-default">Atualizar produtos</button>
-        <button class="btn btn-primary main-menu-btn" data-toggle="modal" data-target="#myModal"><%= new_bidding %></button>
-      </div>
-    </div>
+		<table id="table" class="table">
+			<tr>
+				<td><b>#</b></td>
+				<td><b><%= name %></b></td>
+				<td><b><%= applicant %></b></td>
+				<td><b>Status</b></td>
+				<td><b>Início</b></td>
+				<td><b>Fim</b></td>
+				<td><b>Produtos</b></td>
+				<td><b>Valor do menor lance</b></td>
+				<td><b>Fornecedor</b></td>
+				<td><b>Ações</b></td>
+			</tr>
 
-    <table id="table" class="table">
-      <tr>
-        <td><b>#</b></td>
-        <td><b><%= name %></b></td>
-        <td><b><%= applicant %></b></td>
-        <td><b>Status</b></td>
-        <td><b>Início</b></td>
-        <td><b>Fim</b></td>
-        <td><b>Produtos</b></td>
-        <td><b>Valor do menor lance</b></td>
-        <td><b>Fornecedor</b></td>
-        <td><b>Ações</b></td>
-      </tr>
+			<% for(var i = 0; i < biddings.length; i++) { %>
+			<tr>
+				<td><%= biddings[i].id %></td>
+				<td><%= biddings[i].name %></td>
+				<td><%= biddings[i].applicant %></td>
+				<td><%= biddings[i].status %></td>
+				<td><%= biddings[i].start_date %></td>
+				<td><%= biddings[i].end_date %></td>
+				<td><% for(var j = 0; j < biddings[i].products.length; j++) { %>
+				<p><%= biddings[i].products[j].quantity %> <%= biddings[i].products[j].product_name %></p>
+				<% } %></td>
+				<td>R$ <%= biddings[i].lowestBid.value %></td>
+				<td><%= biddings[i].lowestBid.supplier %></td>
+				<td><i class="fa fa-eye"></i><i class="fa fa-edit"></i><i class="fa fa-close"></i></td>
+			</tr>
+			<% } %>
+		</table>
 
-      <% for(var i = 0; i < biddings.length; i++) { %>
-      <tr>
-        <td><%= biddings[i].id %></td>
-        <td><%= biddings[i].name %></td>
-        <td><%= biddings[i].applicant %></td>
-        <td><%= biddings[i].status %></td>
-        <td><%= biddings[i].start_date %></td>
-        <td><%= biddings[i].end_date %></td>
-        <td><% for(var j = 0; j < biddings[i].products.length; j++) { %>
-          <p><%= biddings[i].products[j].quantity %>
-          <%= biddings[i].products[j].product_name %></p>
-        <% } %></td>
-        <td>R$ <%= biddings[i].lowestBid.value %></td>
-        <td><%= biddings[i].lowestBid.supplier %></td>
-        <td><i class="fa fa-eye"></i><i class="fa fa-edit"></i><i class="fa fa-close"></i></td>
-      </tr>
-      <% } %>
-    </table>
-
-    <!-- Modal -->
-    <div id="myModal" class="modal fade" role="dialog" data-keyboard="false" data-backdrop="static">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h4 class="modal-title"><%= new_bidding %></h4>
-          </div>
-          <div class="modal-body">
-            <p><label><%= name %></label>
-            <input type="text" placeholder="<%= name_placeholder %>" autocomplete="off"></p>
-            <p><label><%= applicant %></label>
-            <input type="text" placeholder="<%= applicant_placeholder %>" autocomplete="off"></p>
-            <p><label><%= start_date %></label>
-            <input type="text" placeholder="<%= start_date_placeholder %>" autocomplete="off"></p>
-            <p><label><%= end_date %></label>
-            <input type="text" placeholder="<%= end_date_placeholder %>" autocomplete="off"></p>
-            <p><label><%= products_label %></label>
-            <div id="products">
-              <div class="dropdown" id="dropdown-1">
-                <input class="quantity" type="text" placeholder="Qntd" autocomplete="off">
-                <button id="product-1" class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown"><%= select %>
-                <span class="caret"></span></button>
-                <ul class="dropdown-menu">
-                  <% for(var p = 0; p < products.length; p++) { %>
-                  <li><a onclick="change_name(this, '<%= products[p].name %>')"><%= products[p].name %></a></li>
-                  <% } %>
-                </ul>
-                <a onclick="new_product()"><i class="fa fa-plus-square"></i></a>
-              </div>
-            </div>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-danger" data-dismiss="modal"><%= cancel %></button>
-            <button type="button" class="btn btn-success" data-dismiss="modal"><%= confirm %></button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </body>
+		<!-- Modal -->
+		<div id="myModal" class="modal fade" role="dialog" data-keyboard="false" data-backdrop="static">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4 class="modal-title"><%= new_bidding %></h4>
+					</div>
+					<div class="modal-body">
+						<p><label><%= name %></label>
+						<input type="text" placeholder="<%= name_placeholder %>" autocomplete="off"></p>
+						<p><label><%= applicant %></label>
+						<input type="text" placeholder="<%= applicant_placeholder %>" autocomplete="off"></p>
+						<p><label><%= start_date %></label>
+						<input type="text" placeholder="<%= start_date_placeholder %>" autocomplete="off"></p>
+						<p><label><%= end_date %></label>
+						<input type="text" placeholder="<%= end_date_placeholder %>" autocomplete="off"></p>
+						<p><label><%= products_label %></label>
+						<div id="products">
+							<div class="dropdown" id="dropdown-1">
+								<input class="quantity" type="text" placeholder="Qntd" autocomplete="off">
+								<button id="product-1" class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown"><%= select %>
+								<span class="caret"></span></button>
+								<ul class="dropdown-menu">
+								<% for(var p = 0; p < products.length; p++) { %>
+									<li><a onclick="change_name(this, '<%= products[p].name %>')"><%= products[p].name %></a></li>
+								<% } %>
+								</ul>
+								<a onclick="new_product()"><i class="fa fa-plus-square"></i></a>
+							</div>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-danger" data-dismiss="modal"><%= cancel %></button>
+						<button type="button" class="btn btn-success" data-dismiss="modal"><%= confirm %></button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
 </html>
