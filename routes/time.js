@@ -4,13 +4,13 @@ var router = express.Router();
 router.get('/', function(req, res, next) {
   var date = new Date();
 
-  /* Getting values */
-  var hour = date.getHours();
-  var min  = date.getMinutes();
-  var sec  = date.getSeconds();
-  var day  = date.getDate();
-  var month = date.getMonth() + 1;
-  var year = date.getFullYear();
+  /* Getting UTC values */
+  var hour = date.getUTCHours();
+  var min  = date.getUTCMinutes();
+  var sec  = date.getUTCSeconds();
+  var day  = date.getUTCDate();
+  var month = date.getUTCMonth() + 1;
+  var year = date.getUTCFullYear();
 
   /* Putting the zeroes when required */
   hour = (hour < 10 ? "0" : "") + hour;
@@ -58,7 +58,7 @@ router.get('/', function(req, res, next) {
       month = "dezembro";
   }
 
-  var text = hour + ":" + min + ":" + sec + ", " + day + " de " + month + " de " + year;
+  var text = hour + ":" + min + ":" + sec + ", " + day + " de " + month + " de " + year + " (UTC)";
 
   var dateObj = {
     "milliseconds": date.getTime(),
