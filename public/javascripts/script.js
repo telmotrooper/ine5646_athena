@@ -1,5 +1,6 @@
 var baseProduct;
 var productCounter = 1;
+var date;
 
 function change_name(product, name) {
 	product = $(product);  // Wrapping DOM element in a jQuery element
@@ -10,6 +11,66 @@ function change_name(product, name) {
 	console.log("Changing button " + productID + " to " + name);
 
 	$("#" + productID).text(name);
+}
+
+function calc_date_and_time(ms) {
+	var date = new Date(ms);
+	
+	  /* Getting values */
+	  var hour = date.getHours();
+	  var min  = date.getMinutes();
+	  var sec  = date.getSeconds();
+	  var day  = date.getDate();
+	  var month = date.getMonth() + 1;
+	  var year = date.getFullYear();
+	
+	  /* Putting the zeroes when required */
+	  hour = (hour < 10 ? "0" : "") + hour;
+	  min = (min < 10 ? "0" : "") + min;
+	  sec = (sec < 10 ? "0" : "") + sec;
+	  day = (day < 10 ? "0" : "") + day;
+	  month = (month < 10 ? "0" : "") + month;
+	  
+	  /* Writing the months in full */
+	  switch(month) {
+		case "01":
+		  month = "janeiro";
+		  break;
+		case "02":
+		  month = "fevereiro";
+		  break;
+		case "03":
+		  month = "março";
+		  break;
+		case "04":
+		  month = "abril";
+		  break;
+		case "05":
+		  month = "maio";
+		  break;
+		case "06":
+		  month = "junho";
+		  break;
+		case "07":
+		  month = "julho";
+		  break;
+		case "08":
+		  month = "agosto";
+		  break;
+		case "09":
+		  month = "setembro";
+		  break;
+		case "10":
+		  month = "outubro";
+		  break;
+		case "11":
+		  month = "novembro";
+		  break;
+		case "12":
+		  month = "dezembro";
+	  }
+	
+	  return text = hour + ":" + min + ":" + sec + ", " + day + " de " + month + " de " + year;
 }
 
 function new_product() {
@@ -34,7 +95,12 @@ $(document).ready(function() {
 		});
 	});
 
-	$.get("/time", function(data) {
-		console.log(data);
+	$.getJSON("/time", function(data) {
+		date = new Date(data.milliseconds);
+
+		setInterval(function() {
+			date = new Date(date.getTime() + 1000);
+			console.log(calc_date_and_time(date));
+		}, 1000);
 	});
 });
