@@ -33,4 +33,8 @@ $(document).ready(function() {
 			window.location.reload(true);
 		});
 	});
+
+	$.get("/time", function(data) {
+		console.log(data);
+	});
 });

@@ -4,20 +4,22 @@ var router = express.Router();
 router.get('/', function(req, res, next) {
   var date = new Date();
 
+  /* Getting values */
   var hour = date.getHours();
-  hour = (hour < 10 ? "0" : "") + hour;
-  
   var min  = date.getMinutes();
-  min = (min < 10 ? "0" : "") + min;
-  
   var sec  = date.getSeconds();
-  sec = (sec < 10 ? "0" : "") + sec;
-  
-  var year = date.getFullYear();
-  
+  var day  = date.getDate();
   var month = date.getMonth() + 1;
+  var year = date.getFullYear();
+
+  /* Putting the zeroes when required */
+  hour = (hour < 10 ? "0" : "") + hour;
+  min = (min < 10 ? "0" : "") + min;
+  sec = (sec < 10 ? "0" : "") + sec;
+  day = (day < 10 ? "0" : "") + day;
   month = (month < 10 ? "0" : "") + month;
   
+  /* Writing the months in full */
   switch(month) {
     case "01":
       month = "janeiro";
@@ -56,11 +58,15 @@ router.get('/', function(req, res, next) {
       month = "dezembro";
   }
 
-  var day  = date.getDate();
-  day = (day < 10 ? "0" : "") + day;
-  
-  res.write(hour + ":" + min + ":" + sec + ", ");
-  res.end(day + " de " + month + " de " + year + "\n");
+  var text = hour + ":" + min + ":" + sec + ", " + day + " de " + month + " de " + year;
+
+  var dateObj = {
+    "milliseconds": date.getTime(),
+    "text": text
+  }
+
+  // res.type()
+  res.send(dateObj);
 });
 
 module.exports = router;
