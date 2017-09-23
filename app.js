@@ -17,6 +17,7 @@ var api_products = require('./routes/api_products');
 var api_products_in_biddings = require('./routes/api_products_in_biddings');
 var api_enabled_products = require('./routes/api_enabled_products');
 var time = require('./routes/time');
+var refresh_products = require('./routes/refresh_products');
 
 /* Initialize application */
 var app = express();
@@ -47,51 +48,7 @@ app.use('/api/products', api_products);
 app.use('/api/products_in_biddings', api_products_in_biddings);
 app.use('/api/enabled_products', api_enabled_products);
 app.use('/time', time);
-
-
-app.post('/refresh_products', function(req, res) {
-  /* Get products from API */
-  request("https://ine5646products.herokuapp.com/api/products", function(error, response, body) {
-    if(error) {
-      console.log("Error: ", error);
-    } else { // If we we're able to load it
-    
-      parseJSON(body, function(error, json) {
-        if(error) {
-          console.log("Error: ", error);
-        } else { // JSON successfully read
-
-          /* Connect to the database */
-          var db = new sqlite3.Database('athena.db', (err) => {
-            if(err) {
-              return console.error(err.message);
-            } else {
-              /* Clean table */
-              db.run("DELETE FROM Products", function(error) {
-                if(error) {
-                  console.log(error.message);
-                }
-              });
-
-              /* Register all products */
-              for(i = 0; i < json.length; i++) {
-                db.run("INSERT INTO Products VALUES (?, ?, ?)", json[i].id, json[i].name, json[i].enabled, function(error) {
-                  if(error) {
-                    console.log(error.message);
-                  }
-                });
-              }
-            }
-          });
-          db.close();
-
-          res.status('202');
-          res.end("Accepted.");
-        }
-      });
-    }
-  });
-});
+app.use('/refresh_products', refresh_products);
 
 /* Catch 404 and forward to error handler */
 app.use(function(req, res, next) {
