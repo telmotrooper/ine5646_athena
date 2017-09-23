@@ -37,6 +37,9 @@ router.get('/', function(req, res, next) {
                   cancel: 'Cancelar',
                   select: 'Selecionar',
                 
+                  refreshing_products: 'Atualizando produtos',
+                  page_will_reload: 'A página irá recarregar dentro de alguns instantes.',
+
                   name_placeholder: 'Exemplo: Material para restauração da ponte',
                   applicant_placeholder: 'Exemplo: Prefeitura de Florianópolis',
                   start_date_placeholder: 'Formato: dd/mm/aaaa',
