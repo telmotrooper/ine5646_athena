@@ -15,7 +15,8 @@ function change_name(product, name) {
 
 function calc_date_and_time(ms) {
 	var date = new Date(ms);
-	
+	console.log("Funct : " + date.getTime());
+
 	  /* Getting values */
 	  var hour = date.getHours();
 	  var min  = date.getMinutes();
