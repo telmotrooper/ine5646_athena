@@ -96,10 +96,19 @@ $(document).ready(function() {
 	});
 
 	$.getJSON("/time", function(data) {
+		console.log("Server: " + data.milliseconds);
+
 		date = new Date(data.milliseconds);
 
+		console.log("Client: " + date.getTime());
+
 		setInterval(function() {
-			date = new Date(date.getTime() + 1000);
+			var ms = date.getTime() + 1000;
+
+			date = new Date(ms);
+
+			console.log("Client: " + date.getTime());
+
 			$("#time-and-date").html(calc_date_and_time(date));
 		}, 1000);
 	});
