@@ -100,7 +100,7 @@ $(document).ready(function() {
 
 		setInterval(function() {
 			date = new Date(date.getTime() + 1000);
-			console.log(calc_date_and_time(date));
+			$("#time-and-date").html(calc_date_and_time(date));
 		}, 1000);
 	});
 });
