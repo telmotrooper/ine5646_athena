@@ -64,17 +64,23 @@ $(document).ready(function() {
 	});
 
 	$("#confirm").click(function() {
-		console.log("name: " + $("#name").val());
-		console.log("applicant: " + $("#applicant").val());
-		console.log("start_date: " + $("#start_date").val());
-		console.log("end_date: " + $("#end_date").val());
+		let bidding = {
+			"name": $("#name").val(),
+			"applicant": $("#applicant").val(),
+			"start_date": $("#start_date").val(),
+			"end_date": $("#end_date").val(),
+			"products": []
+		}
 
 		$("#products").children(".dropdown").each(function(key, value) {
-			let product_name = $(value).children(".btn").text();
-			let quantity = $(value).children("input").val();
-
-			console.log("Prod: " + product_name);
-			console.log("Qntd: " + quantity);
+			bidding.products.push(
+				{
+					"product_name": $(value).children(".btn").text(),
+					"quantity": $(value).children("input").val()
+				}
+			);
 		});
+
+		console.log(bidding);
 	});
 });
