@@ -20,8 +20,8 @@
 			</div>
 			<div>
 				<span id="time-and-date"></span>
-				<button id="refresh-products" class="btn btn-default">Atualizar produtos</button>
-				<button class="btn btn-primary main-menu-btn" data-toggle="modal" data-target="#myModal"><%= new_bidding %></button>
+				<button id="refresh-products" class="btn btn-default" data-toggle="modal" data-target="#refreshing-products">Atualizar produtos</button>
+				<button class="btn btn-primary" data-toggle="modal" data-target="#new-bidding"><%= new_bidding %></button>
 			</div>
 		</div>
 
@@ -57,8 +57,8 @@
 			<% } %>
 		</table>
 
-		<!-- Modal -->
-		<div id="myModal" class="modal fade" role="dialog" data-keyboard="false" data-backdrop="static">
+		<!-- Modals -->
+		<div id="new-bidding" class="modal fade" role="dialog" data-keyboard="false" data-backdrop="static">
 			<div class="modal-dialog">
 				<div class="modal-content">
 					<div class="modal-header">
@@ -91,6 +91,26 @@
 					<div class="modal-footer">
 						<button type="button" class="btn btn-danger" data-dismiss="modal"><%= cancel %></button>
 						<button type="button" class="btn btn-success" data-dismiss="modal"><%= confirm %></button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div id="refreshing-products" class="modal fade" role="dialog" data-keyboard="false" data-backdrop="static">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-body text-center">
+						<h4>Refreshing products</h4>
+
+						<center>
+						<div class="lds-css ng-scope">
+								<div class="lds-dual-ring">
+									<div></div>
+								</div>
+						</div>
+						</center>
+
+						<p>The page will reload in a few moments.</p>
 					</div>
 				</div>
 			</div>
