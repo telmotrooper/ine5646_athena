@@ -9,13 +9,14 @@ var request = require('request');
 var sqlite3 = require('sqlite3').verbose();
 var parseJSON = require('json-parse-async');
 
-/* Pages */
+/* JavaScript files for each page */
 var index = require('./routes/index');
 var api = require('./routes/api');
 var api_bids = require('./routes/api_bids');
 var api_products = require('./routes/api_products');
 var api_products_in_biddings = require('./routes/api_products_in_biddings');
 var api_enabled_products = require('./routes/api_enabled_products');
+var time = require('./routes/time');
 
 /* Initialize application */
 var app = express();
@@ -38,13 +39,15 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-/* Paths */
+/* Paths for each page */
 app.use('/', index);
 app.use('/api', api);
 app.use('/api/bids', api_bids);
 app.use('/api/products', api_products);
 app.use('/api/products_in_biddings', api_products_in_biddings);
 app.use('/api/enabled_products', api_enabled_products);
+app.use('/time', time);
+
 
 app.post('/refresh_products', function(req, res) {
   /* Get products from API */
