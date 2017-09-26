@@ -43,8 +43,8 @@ function new_product() {
 }
 
 $(document).ready(function() {
-	$("#start_date").datepicker({dateFormat: "dd/mm/yy"});
-	$("#end_date").datepicker({dateFormat: "dd/mm/yy"});
+	$("#start_date").datepicker();
+	$("#end_date").datepicker();
 
 	baseProduct = $(".dropdown").clone();
 
