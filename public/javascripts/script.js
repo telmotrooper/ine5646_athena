@@ -43,6 +43,9 @@ function new_product() {
 }
 
 $(document).ready(function() {
+	$("#start_date").datepicker({dateFormat: "dd/mm/yy"});
+	$("#end_date").datepicker({dateFormat: "dd/mm/yy"});
+
 	baseProduct = $(".dropdown").clone();
 
 	$("#refresh-products").click(function() {
