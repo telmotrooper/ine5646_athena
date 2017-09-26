@@ -81,6 +81,6 @@ $(document).ready(function() {
 			);
 		});
 
-		console.log(bidding);
+		$.post("/api", bidding);
 	});
 });

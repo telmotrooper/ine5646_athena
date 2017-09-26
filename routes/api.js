@@ -5,6 +5,11 @@ var router = express.Router();
 var db_file = "athena.db";
 var myJSON = [];  // Used to pass the rows between functions
 
+router.post('/', function(req, res, next) {
+  console.log(req.body);
+  res.send("OK");
+});
+
 /* GET biddings */
 router.get('/', function(req, res, next) {
   var db = new sqlite3.Database(db_file, (error) => {
