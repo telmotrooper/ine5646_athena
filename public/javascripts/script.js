@@ -84,9 +84,14 @@ $(document).ready(function() {
 			);
 		});
 
-		console.log("I'm posting this: ");
-		console.log(bidding);
-
-		$.post("/api", bidding);
+		$.ajax({
+			type: "POST",
+			url: "/api",
+			data: JSON.stringify(bidding),
+			processData: false,
+			contentType: "application/json",
+			dataType:"json",
+			success: function () {}
+		});
 	});
 });
