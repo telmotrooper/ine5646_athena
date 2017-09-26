@@ -6,7 +6,27 @@ var db_file = "athena.db";
 var myJSON = [];  // Used to pass the rows between functions
 
 router.post('/', function(req, res, next) {
+  console.log("I received this: ")
   console.log(req.body);
+
+  if(req.body.name != "" && req.body.applicant != "" &&
+     req.body.start_date != "" && req.body.end_date != "" &&
+     req.body.products.length >= 1) {
+       // Still gotta validate the date properly and the products
+      
+       console.log("Valid request found.");
+
+       var db = new sqlite3.Database(db_file, (error) => {
+        if(error) {
+          return console.error(error.message);
+        } else {
+          for(let i; i < req.body.products.length; i++) {
+            console.log("Product");
+          }
+        }
+      });
+     }
+
   res.send("OK");
 });
 

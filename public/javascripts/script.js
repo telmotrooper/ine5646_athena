@@ -81,6 +81,9 @@ $(document).ready(function() {
 			);
 		});
 
+		console.log("I'm posting this: ");
+		console.log(bidding);
+
 		$.post("/api", bidding);
 	});
 });
