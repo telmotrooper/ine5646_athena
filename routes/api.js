@@ -1,33 +1,40 @@
 var express = require('express');
 var sqlite3 = require('sqlite3').verbose();
 var router = express.Router();
-
 var db_file = "athena.db";
 var myJSON = [];  // Used to pass the rows between functions
 
 router.post('/', function(req, res, next) {
-  console.log("I received this: ")
+  let bidding = req.body;
 
-  console.log(req.body);
-  // console.log(data.substring(3, data.length-6));
+  if(bidding.name != "" && bidding.applicant != "" &&
+     bidding.start_date != "" && bidding.end_date != "" &&
+     bidding.products.length >= 1) {
+       // Still gotta validate the date properly and the products
 
-  // if(req.body.name != "" && req.body.applicant != "" &&
-  //    req.body.start_date != "" && req.body.end_date != "" &&
-  //    req.body.products.length >= 1) {
-  //      // Still gotta validate the date properly and the products
-      
-  //      console.log("Valid request found.");
-
-  //      var db = new sqlite3.Database(db_file, (error) => {
-  //       if(error) {
-  //         return console.error(error.message);
-  //       } else {
-  //         for(let i; i < req.body.products.length; i++) {
-  //           console.log("Product");
-  //         }
-  //       }
-  //     });
-  //    }
+       var db = new sqlite3.Database(db_file, (error) => {
+        if(error) {
+          return console.error(error.message);
+        } else {
+          for(let i = 0; i < bidding.products.length; i++) {
+            try {
+              db.get(`SELECT id FROM Products WHERE name = "?"`, bidding.products[i].product_name, function(err, row) {
+                if(err) {
+                  console.log(err);
+                } else {
+                  console.log(bidding.products[i].product_name);
+                  console.log(row);
+                }
+              });
+              // console.log(temp);
+              // console.log(bidding);
+            } catch(error) {
+              console.log("Error in product query:\n" + error);
+            }
+          }
+        }
+      });
+     }
 
   res.send("OK");
 });
