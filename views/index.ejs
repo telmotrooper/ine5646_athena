@@ -54,8 +54,16 @@
 				<td><% for(var j = 0; j < biddings[i].products.length; j++) { %>
 				<p><%= biddings[i].products[j].quantity %> <%= biddings[i].products[j].product_name %></p>
 				<% } %></td>
-				<td>R$ <%= biddings[i].lowestBid.value %></td>
-				<td><%= biddings[i].lowestBid.supplier %></td>
+				<td>
+					R$ <% if(typeof biddings[i].lowestBid != "undefined") {%>
+					<%= biddings[i].lowestBid.value %>
+					<% } %>
+				</td>
+				<td>
+					<% if(typeof biddings[i].lowestBid != "undefined") {%>
+					<%= biddings[i].lowestBid.supplier %>
+					<% } %>
+				</td>
 				<td><i class="fa fa-eye"></i><i class="fa fa-edit"></i><i class="fa fa-close"></i></td>
 			</tr>
 			<% } %>

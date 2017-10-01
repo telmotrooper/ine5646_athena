@@ -13,7 +13,7 @@ router.post('/', function(req, res, next) {
 
        let db = new sqlite3.Database(db_file, (error) => {
         if(error) {
-          return console.error(error.message);
+          console.log(error);
         } else {
           for(let i = 0; i < bidding.products.length; i++) {
             let query = 'SELECT id FROM Products WHERE name = "' + bidding.products[i].product_name + '"';
@@ -49,15 +49,33 @@ router.post('/', function(req, res, next) {
 });
 
 router.post('/', function(req, res, next) {
-
   console.log(req.myJSON);
+
+  let db = new sqlite3.Database(db_file, (error) => {
+    if(error) {
+      console.log(error);
+    } else {
+      let query = "INSERT INTO Biddings (name, applicant, status, start_date, end_date) VALUES (" +
+      '"' + req.myJSON.name + '", "' + req.myJSON.applicant + '", ' + 1 + ', "' + req.myJSON.start_date +
+      '", "' + req.myJSON.end_date + '")';
+
+      db.run(query, function(error) {
+        if(error) {
+          console.log(error);
+        } else {
+          console.log("It worked!");
+        }
+      });
+    }
+  });
+  db.close();
 });
 
 /* GET biddings */
 router.get('/', function(req, res, next) {
   let db = new sqlite3.Database(db_file, (error) => {
     if(error) {
-      return console.error(error.message);
+      console.log(error);
     } else {
       db.all("SELECT * from Biddings", function(error, rows) {
         if(error) {
