@@ -1,8 +1,8 @@
-var express = require('express');
-var sqlite3 = require('sqlite3').verbose();
-var router = express.Router();
+const express = require('express');
+const sqlite3 = require('sqlite3').verbose();
+const router = express.Router();
 
-var db_file = "athena.db";
+const db_file = "athena.db";
 
 router.post('/', function(req, res, next) {
   /* If all required fields have been filled */
@@ -11,7 +11,7 @@ router.post('/', function(req, res, next) {
      && isFinite(req.body.value)) {
       console.log(req.body);
 
-      var db = new sqlite3.Database(db_file, (error) => {
+      let db = new sqlite3.Database(db_file, (error) => {
         if(error) {
           return console.error(error.message);
         } else {
@@ -31,14 +31,14 @@ router.post('/', function(req, res, next) {
 
 /* Get data from the API */
 router.get('/', function(req, res, next) {
-  myJSON = [];
+  let myJSON = [];
 
-  var db = new sqlite3.Database('athena.db', (err) => {
+  let db = new sqlite3.Database('athena.db', (err) => {
     if(err) {
       return console.error(err.message);
     } else {
       db.all("SELECT * from Bids", function(error, rows) {
-        for(var i = 0; i < rows.length; i++) {
+        for(let i = 0; i < rows.length; i++) {
           myJSON.push(rows[i]);
         };
 

@@ -1,17 +1,17 @@
-var express = require('express');
-var sqlite3 = require('sqlite3').verbose();
-var router = express.Router();
+const express = require('express');
+const sqlite3 = require('sqlite3').verbose();
+const router = express.Router();
 
 /* Get products from the API */
 router.get('/', function(req, res, next) {
-  myJSON = [];
+  let myJSON = [];
 
-  var db = new sqlite3.Database('athena.db', (err) => {
+  let db = new sqlite3.Database('athena.db', (err) => {
     if(err) {
       return console.error(err.message);
     } else {
       db.all("SELECT * FROM Products WHERE status = '1'", function(error, rows) {
-        for(var i = 0; i < rows.length; i++) {
+        for(let i = 0; i < rows.length; i++) {
           myJSON.push(rows[i]);
         };
 

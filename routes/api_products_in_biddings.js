@@ -11,7 +11,7 @@ router.get('/', function(req, res, next) {
       return console.error(err.message);
     } else {
       db.all("SELECT bidding, name AS product_name, product AS product_id, quantity FROM Biddings_Products JOIN Products ON product = id", function(error, rows) {
-        for(var i = 0; i < rows.length; i++) {
+        for(let i = 0; i < rows.length; i++) {
           myJSON.push(rows[i]);
         };
 
