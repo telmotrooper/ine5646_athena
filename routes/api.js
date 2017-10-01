@@ -17,8 +17,9 @@ router.post('/', function(req, res, next) {
           return console.error(error.message);
         } else {
           for(let i = 0; i < bidding.products.length; i++) {
+            let query = 'SELECT id FROM Products WHERE name = "' + bidding.products[i].product_name + '"';
             try {
-              db.get(`SELECT id FROM Products WHERE name = "?"`, bidding.products[i].product_name, function(err, row) {
+              db.get(query, function(err, row) {
                 if(err) {
                   console.log(err);
                 } else {
