@@ -2,7 +2,6 @@ const express = require('express');
 const sqlite3 = require('sqlite3').verbose();
 const router = express.Router();
 const db_file = "athena.db";
-let myJSON = [];  // Used to pass the rows between functions
 
 router.post('/', function(req, res, next) {
   let bidding = req.body;
@@ -51,7 +50,7 @@ router.get('/', function(req, res, next) {
           res.send("Error running query.");
         } else {
           /* At this point you already have all the biddings in the 'rows' array */
-          myJSON = rows;
+          req.myJSON = rows;
           next(); // Run next router.get('/') function;
         }
       });
@@ -71,19 +70,19 @@ router.get('/', function(req, res, next) {
           res.send("Error running query.");
         } else {
           /* Give each bidding it's own bids and products arrays */
-          for(var i = 0; i < myJSON.length; i++) {
-            myJSON[i].bids = [];
-            myJSON[i].products = [];
+          for(var i = 0; i < req.myJSON.length; i++) {
+            req.myJSON[i].bids = [];
+            req.myJSON[i].products = [];
           }
 
           /* Iterate through all products registed in biddings */
           for(var j = 0; j < rows.length; j++) {
 
             /* For each product, iterate through all biddings again */
-            for(var k = 0; k < myJSON.length; k++) {
-              if(myJSON[k].id == rows[j].bidding) {
+            for(var k = 0; k < req.myJSON.length; k++) {
+              if(req.myJSON[k].id == rows[j].bidding) {
                 delete rows[j].bidding; // Remove 'bidding' property so it won't show up in the final response
-                myJSON[k].products.push(rows[j]);
+                req.myJSON[k].products.push(rows[j]);
                 break;
               }
             }
@@ -109,10 +108,10 @@ router.get('/', function(req, res, next) {
           /* Iterate through all bids registed */
           for(var i = 0; i < rows.length; i++) {
             /* For each bid, iterate through all biddings again */
-            for(var j = 0; j < myJSON.length; j++) {
-              if(myJSON[j].id == rows[i].bidding) {
+            for(var j = 0; j < req.myJSON.length; j++) {
+              if(req.myJSON[j].id == rows[i].bidding) {
                 delete rows[j].bidding; // Remove 'bidding' property so it won't show up in the final response
-                myJSON[j].bids.push(rows[i]);
+                req.myJSON[j].bids.push(rows[i]);
                 break;
               }
             }
@@ -138,10 +137,10 @@ router.get('/', function(req, res, next) {
           /* Iterate through all of the lowest bids */
           for(var i = 0; i < rows.length; i++) {
             /* For each lowest bid, iterate through all biddings again */
-            for(var j = 0; j < myJSON.length; j++) {
-              if(myJSON[j].id == rows[i].bidding) {
+            for(var j = 0; j < req.myJSON.length; j++) {
+              if(req.myJSON[j].id == rows[i].bidding) {
                 delete rows[j].bidding; // Remove 'bidding' property so it won't show up in the final response
-                myJSON[j].lowestBid = rows[i];
+                req.myJSON[j].lowestBid = rows[i];
                 break;
               }
             }
@@ -149,7 +148,7 @@ router.get('/', function(req, res, next) {
 
           /* Return JSON to whoever asked */
           res.type("application/json");
-          res.send(myJSON);
+          res.send(req.myJSON);
         }
       });
     }
