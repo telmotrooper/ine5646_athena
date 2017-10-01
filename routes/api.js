@@ -1,8 +1,8 @@
-var express = require('express');
-var sqlite3 = require('sqlite3').verbose();
-var router = express.Router();
-var db_file = "athena.db";
-var myJSON = [];  // Used to pass the rows between functions
+const express = require('express');
+const sqlite3 = require('sqlite3').verbose();
+const router = express.Router();
+const db_file = "athena.db";
+let myJSON = [];  // Used to pass the rows between functions
 
 router.post('/', function(req, res, next) {
   let bidding = req.body;
@@ -23,18 +23,18 @@ router.post('/', function(req, res, next) {
                 if(err) {
                   console.log(err);
                 } else {
-                  console.log(bidding.products[i].product_name);
-                  console.log(row);
+                  /* Add product IDs to the JSON object */
+                  bidding.products[i].id = row.id;
                 }
               });
-              // console.log(temp);
-              // console.log(bidding);
+              
             } catch(error) {
-              console.log("Error in product query:\n" + error);
+              console.log(error);
             }
           }
         }
       });
+      db.close();
      }
 
   res.send("OK");
