@@ -33,10 +33,23 @@ router.post('/', function(req, res, next) {
           }
         }
       });
-      db.close();
+      db.close((err) => {  // close() waits for all queries to finish
+        if(err) {
+          console.log(err);
+        } else {  // Database connection closed
+
+          /* Passing bidding to the next method */
+          req.myJSON = bidding;
+          next();
+        }
+      });
      }
 
   res.send("OK");
+});
+
+router.post('/', function(req, res, next) {
+  console.log(req.myJSON);
 });
 
 /* GET biddings */
