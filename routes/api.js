@@ -11,7 +11,7 @@ router.post('/', function(req, res, next) {
      bidding.products.length >= 1) {
        // Still gotta validate the date properly and the products
 
-       var db = new sqlite3.Database(db_file, (error) => {
+       let db = new sqlite3.Database(db_file, (error) => {
         if(error) {
           return console.error(error.message);
         } else {
@@ -49,12 +49,13 @@ router.post('/', function(req, res, next) {
 });
 
 router.post('/', function(req, res, next) {
+
   console.log(req.myJSON);
 });
 
 /* GET biddings */
 router.get('/', function(req, res, next) {
-  var db = new sqlite3.Database(db_file, (error) => {
+  let db = new sqlite3.Database(db_file, (error) => {
     if(error) {
       return console.error(error.message);
     } else {
@@ -74,7 +75,7 @@ router.get('/', function(req, res, next) {
 
 /* GET products from each bidding */
 router.get('/', function(req, res, next) {
-  var db = new sqlite3.Database(db_file, (error) => {
+  let db = new sqlite3.Database(db_file, (error) => {
     if(error) {
       return console.error(error.message);
     } else {
@@ -83,16 +84,16 @@ router.get('/', function(req, res, next) {
           res.send("Error running query.");
         } else {
           /* Give each bidding it's own bids and products arrays */
-          for(var i = 0; i < req.myJSON.length; i++) {
+          for(let i = 0; i < req.myJSON.length; i++) {
             req.myJSON[i].bids = [];
             req.myJSON[i].products = [];
           }
 
           /* Iterate through all products registed in biddings */
-          for(var j = 0; j < rows.length; j++) {
+          for(let j = 0; j < rows.length; j++) {
 
             /* For each product, iterate through all biddings again */
-            for(var k = 0; k < req.myJSON.length; k++) {
+            for(let k = 0; k < req.myJSON.length; k++) {
               if(req.myJSON[k].id == rows[j].bidding) {
                 delete rows[j].bidding; // Remove 'bidding' property so it won't show up in the final response
                 req.myJSON[k].products.push(rows[j]);
@@ -110,7 +111,7 @@ router.get('/', function(req, res, next) {
 
 /* GET bids from each bidding */
 router.get('/', function(req, res, next) {
-  var db = new sqlite3.Database(db_file, (error) => {
+  let db = new sqlite3.Database(db_file, (error) => {
     if(error) {
       return console.error(error.message);
     } else {
@@ -119,9 +120,9 @@ router.get('/', function(req, res, next) {
           res.send("Error running query.");
         } else {
           /* Iterate through all bids registed */
-          for(var i = 0; i < rows.length; i++) {
+          for(let i = 0; i < rows.length; i++) {
             /* For each bid, iterate through all biddings again */
-            for(var j = 0; j < req.myJSON.length; j++) {
+            for(let j = 0; j < req.myJSON.length; j++) {
               if(req.myJSON[j].id == rows[i].bidding) {
                 delete rows[j].bidding; // Remove 'bidding' property so it won't show up in the final response
                 req.myJSON[j].bids.push(rows[i]);
@@ -139,7 +140,7 @@ router.get('/', function(req, res, next) {
 
 /* GET lowest bids from each bidding */
 router.get('/', function(req, res, next) {
-  var db = new sqlite3.Database(db_file, (error) => {
+  let db = new sqlite3.Database(db_file, (error) => {
     if(error) {
       return console.error(error.message);
     } else {
@@ -148,9 +149,9 @@ router.get('/', function(req, res, next) {
           res.send("Error running query.");
         } else {
           /* Iterate through all of the lowest bids */
-          for(var i = 0; i < rows.length; i++) {
+          for(let i = 0; i < rows.length; i++) {
             /* For each lowest bid, iterate through all biddings again */
-            for(var j = 0; j < req.myJSON.length; j++) {
+            for(let j = 0; j < req.myJSON.length; j++) {
               if(req.myJSON[j].id == rows[i].bidding) {
                 delete rows[j].bidding; // Remove 'bidding' property so it won't show up in the final response
                 req.myJSON[j].lowestBid = rows[i];
