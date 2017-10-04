@@ -3,32 +3,35 @@ const sqlite3 = require('sqlite3').verbose();
 const router = express.Router();
 const db_file = "athena.db";
 
+/* Part 1: Validate data and get the product IDs */
 router.post('/', function(req, res, next) {
   let bidding = req.body;
 
   if(bidding.name != "" && bidding.applicant != "" &&
      bidding.start_date != "" && bidding.end_date != "" &&
      bidding.products.length >= 1) {
-       // Still gotta validate the date properly and the products
+       // TODO: validate the date properly and the products
 
        let db = new sqlite3.Database(db_file, (error) => {
         if(error) {
           console.log(error);
         } else {
           for(let i = 0; i < bidding.products.length; i++) {
-            let query = 'SELECT id FROM Products WHERE name = "' + bidding.products[i].product_name + '"';
-            try {
-              db.get(query, function(err, row) {
-                if(err) {
-                  console.log(err);
-                } else {
-                  /* Add product IDs to the JSON object */
-                  bidding.products[i].id = row.id;
-                }
-              });
-              
-            } catch(error) {
-              console.log(error);
+            if (bidding.products[i].name != "Selecionar\n\t\t\t\t\t\t\t\t") {
+              let query = 'SELECT id FROM Products WHERE name = "' + bidding.products[i].product_name + '"';
+              try {
+                db.get(query, function(err, row) {
+                  if(err) {
+                    console.log(err);
+                  } else {
+                    /* Add product IDs to the JSON object */
+                    bidding.products[i].id = row.id;
+                  }
+                });
+                
+              } catch(error) {
+                console.log(error);
+              }
             }
           }
         }
@@ -48,9 +51,8 @@ router.post('/', function(req, res, next) {
   res.send("OK");
 });
 
+/* Part 2: Register bidding */
 router.post('/', function(req, res, next) {
-  console.log(req.myJSON);
-
   let db = new sqlite3.Database(db_file, (error) => {
     if(error) {
       console.log(error);
@@ -62,8 +64,38 @@ router.post('/', function(req, res, next) {
       db.run(query, function(error) {
         if(error) {
           console.log(error);
+        }
+      });
+    }
+  });
+  db.close((err) => {  // close() waits for all queries to finish
+    if(err) {
+      console.log(err);
+    } else {
+      next();
+    }
+  });
+});
+
+/* Part 3: Get new bidding ID */
+router.post('/', function(req, res, next) {
+  console.log(req.myJSON);
+
+  let db = new sqlite3.Database(db_file, (error) => {
+    if(error) {
+      console.log(error);
+    } else {
+      let query = 'SELECT id from Biddings WHERE name = "' + req.myJSON.name + '" AND applicant = "' +
+      req.myJSON.applicant + '" AND start_date = "' + req.myJSON.start_date + '" AND end_date = "' +
+      req.myJSON.end_date + '"';
+
+      console.log(query);
+
+      db.get(query, function(error, row) {
+        if(error) {
+          console.log(error);
         } else {
-          console.log("It worked!");
+          console.log("Bidding ID: " + row.id);
         }
       });
     }
