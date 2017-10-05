@@ -17,6 +17,8 @@ const refresh_products = require("./routes/refresh_products");
 const test = require("./routes/test");
 const time = require("./routes/time");
 
+const login = require("./routes/login");
+
 /* Initialize application */
 const app = express();
 
@@ -48,6 +50,7 @@ app.use("/api/enabled_products", api_enabled_products);
 app.use("/test", test);
 app.use("/time", time);
 app.use("/refresh_products", refresh_products);
+app.use("/login", login);
 
 /* Catch 404 and forward to error handler */
 app.use(function(req, res, next) {
