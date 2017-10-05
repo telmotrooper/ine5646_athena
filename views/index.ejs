@@ -93,8 +93,7 @@
 						<div id="products">
 							<div class="dropdown" id="dropdown-1">
 								<input class="quantity" type="text" placeholder="Qntd" autocomplete="off">
-								<button id="product-1" class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown"><%= select %>
-								<span class="caret"></span></button>
+								<button id="product-1" class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown"><%= select %></button>
 								<ul class="dropdown-menu">
 								<% for(var p = 0; p < products.length; p++) { %>
 									<li><a onclick="change_name(this, '<%= products[p].name %>')"><%= products[p].name %></a></li>

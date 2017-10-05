@@ -33,7 +33,7 @@ router.get('/', function(req, res, next) {
 
 									confirm: 'Confirmar',
 									cancel: 'Cancelar',
-									select: 'Selecionar',
+									select: 'Produto',
 
 									refreshing_products: 'Atualizando produtos',
 									page_will_reload: 'A página irá recarregar dentro de alguns instantes.',

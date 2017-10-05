@@ -76,12 +76,14 @@ $(document).ready(function() {
 		}
 
 		$("#products").children(".dropdown").each(function(key, value) {
-			bidding.products.push(
-				{
-					"product_name": $(value).children(".btn").text(),
-					"quantity": $(value).children("input").val()
-				}
-			);
+			if($(value).children(".btn").text() != "Produto") {
+				bidding.products.push(
+					{
+						"product_name": $(value).children(".btn").text(),
+						"quantity": $(value).children("input").val()
+					}
+				);
+			}
 		});
 
 		$.ajax({
