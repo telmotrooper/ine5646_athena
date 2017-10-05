@@ -79,8 +79,6 @@ router.post('/', function(req, res, next) {
 
 /* Part 3: Get new bidding ID */
 router.post('/', function(req, res, next) {
-  console.log(req.myJSON);
-
   let db = new sqlite3.Database(db_file, (error) => {
     if(error) {
       console.log(error);
@@ -95,9 +93,38 @@ router.post('/', function(req, res, next) {
         if(error) {
           console.log(error);
         } else {
-          console.log("Bidding ID: " + row.id);
+          req.myJSON.id = row.id;
         }
       });
+    }
+  });
+  db.close((err) => {
+    if(err) {
+      console.log(err);
+    } else {
+      next();
+    }
+  });
+});
+
+/* Part 4: Registering products in bidding */
+router.post('/', function(req, res, next) {
+  console.log(req.myJSON);
+
+  let db = new sqlite3.Database(db_file, (error) => {
+    if(error) {
+      console.log(error);
+    } else {
+      for(let i = 0; i < req.myJSON.products.length; i++) {
+        let query = 'INSERT INTO Biddings_Products VALUES(' + req.myJSON.id + ', "' + 
+        req.myJSON.products[i].id + '", ' + req.myJSON.products[i].quantity + ')';
+
+        db.run(query, function(error, row) {
+          if(error) {
+            console.log(error);
+          }
+        });
+      }
     }
   });
   db.close();
