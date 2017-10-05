@@ -55,13 +55,17 @@
 				<p><%= biddings[i].products[j].quantity %> <%= biddings[i].products[j].product_name %></p>
 				<% } %></td>
 				<td>
-					R$ <% if(typeof biddings[i].lowestBid != "undefined") {%>
-					<%= biddings[i].lowestBid.value %>
+					<% if(typeof biddings[i].lowestBid != "undefined") {%>
+					R$ <%= biddings[i].lowestBid.value %>
+					<% } else { %>
+					-
 					<% } %>
 				</td>
 				<td>
 					<% if(typeof biddings[i].lowestBid != "undefined") {%>
 					<%= biddings[i].lowestBid.supplier %>
+					<% } else { %>
+					-
 					<% } %>
 				</td>
 				<td><i class="fa fa-eye"></i><i class="fa fa-edit"></i><i class="fa fa-close"></i></td>
