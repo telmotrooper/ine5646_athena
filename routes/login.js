@@ -9,15 +9,14 @@ const redirect_uri = "http://localhost:8000/login";
 const client_secret = "307d1a4298a32ed553ad074d79f182de39516ffc";
 
 router.get('/', function(req, res, next) {
-	if(req.query.code !== undefined) {
-		console.log("Code: " + req.query.code);
-
+	if(req.query.code !== undefined) {  // If a code was received
+		/* Request access token */
 		request.post({
 			url: "https://github.com/login/oauth/access_token?client_id=" + client_id +
 			"&redirect_uri=" + redirect_uri + "&client_secret=" + client_secret +
 			"&code=" + req.query.code
 		}, function(error, response, body) {
-			console.log(response);
+			console.log(body); // the response might start with "access_token" or "error"
 		});
 	}
 
