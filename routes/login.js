@@ -19,7 +19,20 @@ router.get('/', function(req, res, next) {
 				'Accept': "application/json"
 			}
 		}, function(error, response, body) {
-			console.log(body); // expect properties "access_token" or "error"
+			/* Parse response string as a JSON object */
+			parseJSON(body, function(error, content) {
+				/* Expect either "access_token" or "error" */
+
+				if(content.access_token !== undefined) { // If an access token has been received
+					/* Request the user data from the GitHub API */
+					request("https://api.github.com/user?access_token=" + content.access_token,
+					{headers: { "User-Agent": "Athena" }}, function(error, response, body) {
+						parseJSON(body, function(error, content) {
+							console.log(content);
+						});
+					});
+				}
+			});
 		});
 	}
 
