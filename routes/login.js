@@ -14,9 +14,12 @@ router.get('/', function(req, res, next) {
 		request.post({
 			url: "https://github.com/login/oauth/access_token?client_id=" + client_id +
 			"&redirect_uri=" + redirect_uri + "&client_secret=" + client_secret +
-			"&code=" + req.query.code
+			"&code=" + req.query.code,
+			headers: {
+				'Accept': "application/json"
+			}
 		}, function(error, response, body) {
-			console.log(body); // the response might start with "access_token" or "error"
+			console.log(body); // expect properties "access_token" or "error"
 		});
 	}
 
