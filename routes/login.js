@@ -4,6 +4,8 @@ const parseJSON = require('json-parse-async');
 const router = express.Router();
 
 router.get('/', function(req, res, next) {
+	console.log(req.query.code);
+
 	res.render('login', {
 		title: 'Login',
 		login_required: 'Para utilizar essa aplicação, é necessário fazer login'
