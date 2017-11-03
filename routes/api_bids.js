@@ -5,6 +5,15 @@ const router = express.Router();
 const db_file = "athena.db";
 
 router.post('/', function(req, res, next) {
+  /*  Valid request example:
+      {
+        "bidding": 2,
+        "date": "03/11/2017",
+        "supplier": "Pelé Entertainment",
+        "value": 18900
+      }
+  */
+
   /* If all required fields have been filled */
   if(Number.isInteger(req.body.bidding) && req.body.date != null &&
      req.body.supplier != null && !isNaN(parseFloat(req.body.value))
