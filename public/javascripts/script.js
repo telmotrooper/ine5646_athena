@@ -64,26 +64,32 @@ $(document).ready(function() {
 			console.log(json);
 			$("#bids-body").empty();  // Clean div
 
-			/* Initialize table */
-			$("#bids-body").append(
-				"<table id='bids-table'>" +
-					"<tr>" +
-						"<td><b>Data</b></td>" +
-						"<td><b>Fornecedor</b></td>" +
-						"<td><b>Valor</b></td>" +
-					"</tr>" +
-				"</table>");
-			
-			json.forEach(function(val) {
-				$("#bids-table").append(
-					"<tr>" +
-						"<td>" + val.date + "</td>" +
-						"<td>" + val.supplier + "</td>" +
-						"<td>" + val.value + "</td>" +
-					"</tr>"
-				);
-			});
+			if(json.length > 0) {  // If there is at least one bidding
 
+				/* Initialize table */
+				$("#bids-body").append(
+					"<table id='bids-table'>" +
+						"<tr>" +
+							"<td><b>Data</b></td>" +
+							"<td><b>Fornecedor</b></td>" +
+							"<td><b>Valor</b></td>" +
+						"</tr>" +
+					"</table>");
+			
+				/* Fill table */
+				json.forEach(function(val) {
+					$("#bids-table").append(
+						"<tr>" +
+							"<td>" + val.date + "</td>" +
+							"<td>" + val.supplier + "</td>" +
+							"<td>" + val.value + "</td>" +
+						"</tr>"
+					);
+				});
+
+			} else {
+				$("#bids-body").append("<p>Nenhum lance foi feito nessa licitação.</p>");
+			}
 		});
 	});
 
