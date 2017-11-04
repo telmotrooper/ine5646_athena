@@ -35,6 +35,10 @@ router.get('/', function(req, res, next) {
 									cancel: 'Cancelar',
 									select: 'Produto',
 
+									// in_progress: 'Em andamento',
+									// finished: 'Concluídas',
+									// canceled: 'Canceladas',
+
 									refreshing_products: 'Atualizando produtos',
 									page_will_reload: 'A página irá recarregar dentro de alguns instantes.',
 
