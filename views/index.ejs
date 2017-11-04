@@ -69,7 +69,10 @@
 					-
 					<% } %>
 				</td>
-				<td><i class="fa fa-eye" data-toggle="modal" data-target="#checking-bids"></i><i class="fa fa-close"></i></td>
+				<td>
+					<i class="fa fa-eye" data-toggle="modal" data-target="#checking-bids"></i>
+					<i class="fa fa-close" data-toggle="modal" data-target="#cancel-bidding"></i>
+				</td>
 			</tr>
 			<% } %>
 			<% } %>
@@ -115,7 +118,9 @@
 							-
 							<% } %>
 						</td>
-						<td><i class="fa fa-eye"></i></td>
+						<td>
+							<i class="fa fa-eye" data-toggle="modal" data-target="#checking-bids"></i>
+						</td>
 					</tr>
 					<% } %>
 					<% } %>
@@ -161,7 +166,9 @@
 					-
 					<% } %>
 				</td>
-				<td><i class="fa fa-eye"></i></td>
+				<td>
+					<i class="fa fa-eye" data-toggle="modal" data-target="#checking-bids"></i>
+				</td>
 			</tr>
 			<% } %>
 			<% } %>
@@ -227,38 +234,35 @@
 		</div>
 
 		<!-- Checking bids modal -->
-		<div id="checking-bids" class="modal fade" role="dialog" data-keyboard="false" data-backdrop="static">
+		<div id="checking-bids" class="modal fade" role="dialog">
 			<div class="modal-dialog">
 				<div class="modal-content">
 					<div class="modal-header">
-						<h4 class="modal-title"><%= new_bidding %></h4>
+						<h4 class="modal-title">Lances</h4>
 					</div>
 					<div class="modal-body">
-						<p><label><%= name %></label>
-						<input id="name" type="text" placeholder="<%= name_placeholder %>" autocomplete="off"></p>
-						<p><label><%= applicant %></label>
-						<input id="applicant" type="text" placeholder="<%= applicant_placeholder %>" autocomplete="off"></p>
-						<p><label><%= start_date %></label>
-						<input id="start_date" type="text" placeholder="<%= start_date_placeholder %>" autocomplete="off"></p>
-						<p><label><%= end_date %></label>
-						<input id="end_date" type="text" placeholder="<%= end_date_placeholder %>" autocomplete="off"></p>
-						<p><label><%= products_label %></label>
-						<div id="products">
-							<div class="dropdown" id="dropdown-1">
-								<input class="quantity" type="text" placeholder="Qntd" autocomplete="off">
-								<button id="product-1" class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown"><%= select %></button>
-								<ul class="dropdown-menu">
-								<% for(var p = 0; p < products.length; p++) { %>
-									<li><a onclick="change_name(this, '<%= products[p].name %>')"><%= products[p].name %></a></li>
-								<% } %>
-								</ul>
-								<a onclick="new_product()"><i class="fa fa-plus-square"></i></a>
-							</div>
-						</div>
+						<p>A lista de lances será mostrada aqui.</p>
 					</div>
 					<div class="modal-footer">
-						<button type="button" class="btn btn-danger" data-dismiss="modal"><%= cancel %></button>
-						<button id="confirm" type="button" class="btn btn-success" data-dismiss="modal"><%= confirm %></button>
+						<button type="button" class="btn btn-default" data-dismiss="modal">OK</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- Cancel bidding modal -->
+		<div id="cancel-bidding" class="modal fade" role="dialog">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4 class="modal-title">Confirmação</h4>
+					</div>
+					<div class="modal-body">
+						<p>Você tem certeza que deseja cancelar essa licitação?</p>
+					</div>
+					<div class="modal-footer">
+						<button id="confirm" type="button" class="btn btn-default" data-dismiss="modal">Não</button>
+						<button type="button" class="btn btn-danger" data-dismiss="modal">Sim</button>
 					</div>
 				</div>
 			</div>
