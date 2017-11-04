@@ -74,3 +74,6 @@ i {
   -webkit-transform: translate(-100px, -100px) scale(1) translate(100px, 100px);
   transform: translate(-100px, -100px) scale(1) translate(100px, 100px);
 }
+.section-title {
+  /* margin-top: -3px; */
+}
