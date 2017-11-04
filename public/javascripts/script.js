@@ -1,6 +1,7 @@
-var baseProduct;
-var productCounter = 1;
-var date;
+let baseProduct;
+let productCounter = 1;
+let date;
+let bidToCancel;
 
 function change_name(product, name) {
 	product = $(product);  // Wrapping DOM element in a jQuery element
@@ -107,9 +108,11 @@ $(document).ready(function() {
 	});
 
 	$(".cancel-bidding").click(function() {
-		let bidding_id = $(this).data("id");
+		bidToCancel = $(this).data("id");
+	});
 
-		console.log("Attempting to cancel bidding " + bidding_id + ".");
+	$("#confirm-cancellation").click(function() {
+		$.post("/api/status/" + bidToCancel + "/0");
 	});
 
 	$.getJSON("/time", function(data) {
