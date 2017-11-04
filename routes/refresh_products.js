@@ -38,10 +38,14 @@ router.post('/', function(req, res) {
 							}
 						}
 					});
-					db.close();
-
-					res.status('202');
-					res.end("Accepted.");
+					db.close((err) => {  // close() waits for all queries to finish
+						if(err) {
+						  console.log(err);
+						} else {  // Database connection closed
+							res.status('202');
+							res.end("Accepted.");
+						}
+					});
 				}
 			});
 		}
