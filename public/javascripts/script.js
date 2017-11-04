@@ -112,7 +112,17 @@ $(document).ready(function() {
 	});
 
 	$("#confirm-cancellation").click(function() {
-		$.post("/api/status/" + bidToCancel + "/0");
+		// $.post("/api/status/" + bidToCancel + "/0");
+
+		$.ajax({
+			type: "POST",
+			url: "/api/status/" + bidToCancel + "/0",
+			statusCode: {
+				200: function() {  // OK
+					window.location.reload(true);  // Reload page
+				}
+			}
+		});
 	});
 
 	$.getJSON("/time", function(data) {
