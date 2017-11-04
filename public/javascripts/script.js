@@ -62,17 +62,17 @@ $(document).ready(function() {
 
 		$("#bids-body").empty();  // Empty div
 
-		/* Show loading screen */
-		$("#bids-body").append(
-			"<center>" +
-				'<div class="lds-css ng-scope">' +
-					'<div class="lds-dual-ring">' +
-						"<div></div>" +
-					"</div>" +
-				"</div>" +
-				"<p>Carregando lances...</p>" + 
-			"</center>"
-		);
+		// /* Show loading screen */
+		// $("#bids-body").append(
+		// 	"<center>" +
+		// 		'<div class="lds-css ng-scope">' +
+		// 			'<div class="lds-dual-ring">' +
+		// 				"<div></div>" +
+		// 			"</div>" +
+		// 		"</div>" +
+		// 		"<p>Carregando lances...</p>" + 
+		// 	"</center>"
+		// );
 		
 		$.getJSON("/api/bids/" + bidding_id, function(json) {
 			$("#bids-body").empty();  // Empty div
