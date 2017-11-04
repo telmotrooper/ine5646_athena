@@ -48,11 +48,17 @@ $(document).ready(function() {
 
 	baseProduct = $(".dropdown").clone();
 
+	/* Refresh products button clicked */
 	$("#refresh-products").click(function() {
 		$.post("/refresh_products", function() {
 			/* Reload page after refreshing products */
 			window.location.reload(true);
 		});
+	});
+
+
+	$(".check-bid").click(function() {
+		console.log($(this).data("id"));
 	});
 
 	$.getJSON("/time", function(data) {
