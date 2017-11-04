@@ -28,10 +28,14 @@ router.post('/', function(req, res, next) {
           req.body.bidding, req.body.date, req.body.supplier, req.body.value);
         }
       });
-      db.close();
-
-      res.status("202"); // 202 = Accepted
-      res.end("Bid accepted.");
+      db.close((err) => {  // close() waits for all queries to finish
+        if(err) {
+          console.log(err);
+        } else {  // Database connection closed
+          res.status("202"); // 202 = Accepted
+          res.end("Bid accepted.");
+        }
+      });
   } else {
     res.status("400");
     res.end("Invalid syntax.");
