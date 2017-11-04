@@ -60,9 +60,23 @@ $(document).ready(function() {
 	$(".check-bid").click(function() {
 		let bidding_id = $(this).data("id");
 
+		$("#bids-body").empty();  // Empty div
+
+		/* Show loading screen */
+		$("#bids-body").append(
+			"<center>" +
+				'<div class="lds-css ng-scope">' +
+					'<div class="lds-dual-ring">' +
+						"<div></div>" +
+					"</div>" +
+				"</div>" +
+				"<p>Carregando lances...</p>" + 
+			"</center>"
+		);
+		
 		$.getJSON("/api/bids/" + bidding_id, function(json) {
 			console.log(json);
-			$("#bids-body").empty();  // Clean div
+			$("#bids-body").empty();  // Empty div
 
 			if(json.length > 0) {  // If there is at least one bidding
 
