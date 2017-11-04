@@ -106,6 +106,12 @@ $(document).ready(function() {
 		});
 	});
 
+	$(".cancel-bidding").click(function() {
+		let bidding_id = $(this).data("id");
+
+		console.log("Attempting to cancel bidding " + bidding_id + ".");
+	});
+
 	$.getJSON("/time", function(data) {
 		date = new Date(data.milliseconds);
 
