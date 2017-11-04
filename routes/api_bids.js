@@ -42,7 +42,7 @@ router.post('/', function(req, res, next) {
   }
 });
 
-/* Get data from the API */
+/* Get all bids from the database */
 router.get('/', function(req, res, next) {
   let myJSON = [];
 
@@ -51,6 +51,27 @@ router.get('/', function(req, res, next) {
       return console.error(err.message);
     } else {
       db.all("SELECT * from Bids", function(error, rows) {
+        for(let i = 0; i < rows.length; i++) {
+          myJSON.push(rows[i]);
+        };
+
+        res.type("application/json");
+        res.send(myJSON);
+      });
+    };
+  });
+  db.close();
+});
+
+/* Get bids for specific bidding from the database */
+router.get('/:bidding', function(req, res, next) {
+  let myJSON = [];
+
+  let db = new sqlite3.Database('athena.db', (err) => {
+    if(err) {
+      return console.error(err.message);
+    } else {
+      db.all("SELECT * from Bids WHERE bidding = '" + req.params.bidding + "'", function(error, rows) {
         for(let i = 0; i < rows.length; i++) {
           myJSON.push(rows[i]);
         };
