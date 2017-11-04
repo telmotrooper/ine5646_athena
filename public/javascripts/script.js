@@ -58,7 +58,33 @@ $(document).ready(function() {
 
 
 	$(".check-bid").click(function() {
-		console.log($(this).data("id"));
+		let bidding_id = $(this).data("id");
+
+		$.getJSON("/api/bids/" + bidding_id, function(json) {
+			console.log(json);
+			$("#bids-body").empty();  // Clean div
+
+			/* Initialize table */
+			$("#bids-body").append(
+				"<table id='bids-table'>" +
+					"<tr>" +
+						"<td><b>Data</b></td>" +
+						"<td><b>Fornecedor</b></td>" +
+						"<td><b>Valor</b></td>" +
+					"</tr>" +
+				"</table>");
+			
+			json.forEach(function(val) {
+				$("#bids-table").append(
+					"<tr>" +
+						"<td>" + val.date + "</td>" +
+						"<td>" + val.supplier + "</td>" +
+						"<td>" + val.value + "</td>" +
+					"</tr>"
+				);
+			});
+
+		});
 	});
 
 	$.getJSON("/time", function(data) {
