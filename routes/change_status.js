@@ -4,11 +4,12 @@ const router = express.Router();
 
 const db_file = "athena.db";
 
-/* Part 1/3: Validating parameter type */
-router.post("/:bidding", function(req, res, next) {
+/* Part 1/3: Validating parameter types */
+router.post("/:bidding/:status", function(req, res, next) {
   let bidding_id = parseInt(req.params.bidding);
+  let status = parseInt(req.params.status);
 
-  if(!isNaN(bidding_id)) {
+  if(!isNaN(bidding_id) && !isNaN(status)) {
     next();
 
   } else {
@@ -18,7 +19,7 @@ router.post("/:bidding", function(req, res, next) {
 });
 
 /* Part 2/3: Validating id */
-router.post("/:bidding", function(req, res, next) {
+router.post("/:bidding/:status", function(req, res, next) {
   let bidding_id = parseInt(req.params.bidding);
   
   let db = new sqlite3.Database(db_file, (err) => {
@@ -44,15 +45,16 @@ router.post("/:bidding", function(req, res, next) {
   db.close();
 });
 
-/* Part 3/3: Canceling bidding */
-router.post("/:bidding", function(req, res, next) {
+/* Part 3/3: Changing bidding status */
+router.post("/:bidding/:status", function(req, res, next) {
   let bidding_id = parseInt(req.params.bidding);
-  
+  let status = parseInt(req.params.status);
+
   let db = new sqlite3.Database(db_file, (err) => {
     if(err) {
       return console.error(err.message);
     } else {
-      db.run("UPDATE Biddings SET status = 0 WHERE id = " + bidding_id, function(error) {
+      db.run("UPDATE Biddings SET status = " + status + " WHERE id = " + bidding_id, function(error) {
         if(error) {
           console.log(error);
           res.status("500");
