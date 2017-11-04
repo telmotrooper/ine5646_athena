@@ -75,7 +75,6 @@ $(document).ready(function() {
 		);
 		
 		$.getJSON("/api/bids/" + bidding_id, function(json) {
-			console.log(json);
 			$("#bids-body").empty();  // Empty div
 
 			if(json.length > 0) {  // If there is at least one bidding
