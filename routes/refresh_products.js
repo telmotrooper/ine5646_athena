@@ -42,7 +42,7 @@ router.post('/', function(req, res) {
 						if(err) {
 						  console.log(err);
 						} else {  // Database connection closed
-							res.status('202');
+							res.status("202");
 							res.end("Accepted.");
 						}
 					});

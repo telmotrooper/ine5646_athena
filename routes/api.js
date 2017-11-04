@@ -3,7 +3,7 @@ const sqlite3 = require('sqlite3').verbose();
 const router = express.Router();
 const db_file = "athena.db";
 
-/* Part 1: Validate data and get the product IDs */
+/* Part 1/4: Validate data and get the product IDs */
 router.post('/', function(req, res, next) {
   let bidding = req.body;
 
@@ -46,12 +46,15 @@ router.post('/', function(req, res, next) {
           next();
         }
       });
+     } else {
+       res.status("400");
+       res.end("Bad request.");
      }
 
-  res.send("OK");
+  // res.send("OK");
 });
 
-/* Part 2: Register bidding */
+/* Part 2/4: Register bidding */
 router.post('/', function(req, res, next) {
   let db = new sqlite3.Database(db_file, (error) => {
     if(error) {
@@ -77,7 +80,7 @@ router.post('/', function(req, res, next) {
   });
 });
 
-/* Part 3: Get new bidding ID */
+/* Part 3/4: Get new bidding ID */
 router.post('/', function(req, res, next) {
   let db = new sqlite3.Database(db_file, (error) => {
     if(error) {
@@ -107,7 +110,7 @@ router.post('/', function(req, res, next) {
   });
 });
 
-/* Part 4: Registering products in bidding */
+/* Part 4/4: Registering products in bidding */
 router.post('/', function(req, res, next) {
   console.log(req.myJSON);
 
@@ -127,7 +130,17 @@ router.post('/', function(req, res, next) {
       }
     }
   });
-  db.close();
+  
+  /* Note: this sends "created" even if an error occured */
+
+  db.close((err) => {  // close() waits for all queries to finish
+    if(err) {
+      console.log(err);
+    } else {  // Database connection closed
+      res.status("201");
+      res.end("Created.");
+    }
+  });
 });
 
 /* GET biddings */

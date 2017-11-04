@@ -66,6 +66,7 @@ $(document).ready(function() {
 		}, 1000);
 	});
 
+	/* Sending a new bidding to the server */
 	$("#confirm").click(function() {
 		let bidding = {
 			"name": $("#name").val(),
@@ -93,7 +94,12 @@ $(document).ready(function() {
 			processData: false,
 			contentType: "application/json",
 			dataType:"json",
-			success: function () {}
+			success: function () {},
+			statusCode: {
+				201: function() {  // Created
+					window.location.reload(true);  // Reload page
+				}
+			}
 		});
 	});
 });
