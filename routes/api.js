@@ -236,6 +236,7 @@ router.get('/', function(req, res, next) {
     } else {
       db.all("SELECT bidding, date, supplier, MIN(value) as value FROM Bids GROUP BY bidding", function(error, rows) {
         if(error) {
+          console.log(error);
           res.send("Error running query.");
         } else {
           /* Iterate through all of the lowest bids */
@@ -243,7 +244,12 @@ router.get('/', function(req, res, next) {
             /* For each lowest bid, iterate through all biddings again */
             for(let j = 0; j < req.myJSON.length; j++) {
               if(req.myJSON[j].id == rows[i].bidding) {
-                delete rows[j].bidding; // Remove 'bidding' property so it won't show up in the final response
+                /* Following line removed since it's causing an error
+                   "TypeError: Cannot convert undefined or null to object"
+                   Right now some bids have bidding ids and some don't,
+                   gotta check it out later.
+                */
+                // delete rows[j].bidding; // Remove 'bidding' property so it won't show up in the final response
                 req.myJSON[j].lowestBid = rows[i];
                 break;
               }
