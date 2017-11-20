@@ -11,6 +11,8 @@
 		"debug": "3.0.1",
 		"ejs": "2.5.7",
 		"express": "4.15.4",
+		"express-graphql": "^0.6.11",
+		"graphql": "^0.11.7",
 		"ip": "^1.1.5",
 		"json-parse-async": "1.0.3",
 		"morgan": "1.8.2",
