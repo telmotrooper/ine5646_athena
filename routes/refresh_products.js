@@ -6,14 +6,18 @@ const sqlite3 = require('sqlite3').verbose();
 
 router.post('/', function(req, res) {
 	/* Get products from API */
-	request("https://ine5646products.herokuapp.com/api/products", function(error, response, body) {
+	request("https://ine5646products.herokuapp.com/api/productsXXXXXXX", function(error, response, body) {
 		if(error) {
-			console.log("Error: ", error);
+			console.log("Error 500: Internal Server Error");
+			res.type("500");
+			res.end("Internal Server Error");
 		} else { // If we we're able to load it
 
 			parseJSON(body, function(error, json) {
-				if(error) {
-					console.log("Error: ", error);
+				if(error) {	// Most likely place for an error to occur if the service is unavailable
+					console.log("Error 503: Service Unavailable");
+					res.type("503");
+					res.end("Service Unavailable");
 				} else { // JSON successfully read
 
 					/* Connect to the database */

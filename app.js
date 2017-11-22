@@ -17,7 +17,6 @@ const change_status = require("./routes/change_status");
 const refresh_products = require("./routes/refresh_products");
 const test = require("./routes/test");
 const time = require("./routes/time");
-
 const login = require("./routes/login");
 
 /* Initialize application */
