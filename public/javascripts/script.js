@@ -51,10 +51,27 @@ $(document).ready(function() {
 
 	/* Refresh products button clicked */
 	$("#refresh-products").click(function() {
-		$.post("/refresh_products", function() {
-			/* Reload page after refreshing products */
-			window.location.reload(true);
+		$.ajax({
+			type: "POST",
+			url: "/refresh_products",
+			statusCode: {
+				500: function(res) {
+
+				},
+				503: function(res) {
+
+				},
+				202: function(res) {
+					/* Reload page after refreshing products */
+					window.location.reload(true);
+				}
+			}
 		});
+
+		// $.post("/refresh_products", function() {
+		// 	/* Reload page after refreshing products */
+		// 	window.location.reload(true);
+		// });
 	});
 
 
