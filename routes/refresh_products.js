@@ -6,7 +6,7 @@ const sqlite3 = require('sqlite3').verbose();
 
 router.post('/', function(req, res) {
 	/* Get products from API */
-	request("https://ine5646products.herokuapp.com/api/productsXXXX", function(error, response, body) {
+	request("https://ine5646products.herokuapp.com/api/products", function(error, response, body) {
 		if(error) {
 			console.log("Error 500: Internal Server Error");
 			res.status("500");
