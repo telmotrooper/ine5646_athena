@@ -56,10 +56,12 @@ $(document).ready(function() {
 			url: "/refresh_products",
 			statusCode: {
 				500: function(res) {
-
+					$("#refreshing-products").modal("toggle");
+					$("#failed-to-refresh-products").modal("toggle");
 				},
 				503: function(res) {
-
+					$("#refreshing-products").modal("toggle");
+					$("#failed-to-refresh-products").modal("toggle");
 				},
 				202: function(res) {
 					/* Reload page after refreshing products */
